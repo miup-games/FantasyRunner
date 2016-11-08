@@ -114,7 +114,7 @@ public class ItemUIController : MonoBehaviour
         if (this._activatedPowerItems.Count > 0)
         {
             this._activatedPowerItems[0].Use();
-            gameManager.AddSpecialPower();
+            gameManager.AddSpecialPower(this._activatedPowerItems[0].transform.position);
         }
 
         this._activatedPowerItems.Clear();

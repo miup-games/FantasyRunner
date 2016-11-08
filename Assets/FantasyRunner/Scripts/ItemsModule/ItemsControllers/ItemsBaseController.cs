@@ -49,6 +49,11 @@ public abstract class ItemsBaseController : MonoBehaviour
 
     public virtual void RemoveItem(ItemUIController itemController) {}
 
+    public virtual void AddCoins(int coins, Vector3 position)
+    {
+        this.AddCoins(coins);
+    }
+
     public virtual void AddCoins(int coins)
     {
         this._coins = Mathf.Clamp(this._coins + coins, 0, int.MaxValue);

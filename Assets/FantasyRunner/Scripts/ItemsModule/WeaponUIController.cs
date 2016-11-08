@@ -6,6 +6,7 @@ public class WeaponUIController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _icon;
     [SerializeField] private ProgressBarController _durationBar;
+    [SerializeField] private LootAnimationController _lootAnimationController;
 
     private Coroutine _setProgressBarCoroutine;
     private Sprite _regularWeaponSprite;
@@ -17,6 +18,7 @@ public class WeaponUIController : MonoBehaviour
 
     public void SetWeapon(WeaponItem weaponItem)
     {
+        this._lootAnimationController.AddLoot(weaponItem.transform.position);
         StopSetProgressBarCoroutine();
         this._setProgressBarCoroutine = StartCoroutine(SetProgressBarCoroutine(weaponItem));
     }

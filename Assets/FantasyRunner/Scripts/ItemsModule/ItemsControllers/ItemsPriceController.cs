@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ItemsPriceController : ItemsBaseController 
 {
+    [SerializeField] private LootAnimationController _coinsLootAnimationController;
+
     private List<Item> _allItems;
     private List<ItemUIController> _itemControllers;
 
@@ -27,6 +29,12 @@ public class ItemsPriceController : ItemsBaseController
         }
 
         this.AddCoins(0);
+    }
+
+    public override void AddCoins(int coins, Vector3 position)
+    {
+        base.AddCoins(coins, position);
+        this._coinsLootAnimationController.AddLoot(position);
     }
 
     public override void AddCoins(int coins)

@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScoreController _scoreController;
     [SerializeField] private CumulativeUIBaseController _specialPowerController;
     [SerializeField] private PowerItemUsageController _powerItemUsageController;
+    [SerializeField] private LootAnimationController _powerLootAnimationController;
 
     private int _waveIndex = 0;
     private int _enemyIndex = 0;
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Input.multiTouchEnabled = false;
+        GameObjectPool.Instantiate();
     }
 
 	void Start() 
@@ -192,6 +194,12 @@ public class GameManager : MonoBehaviour
 
         this.PlaySound(itemSound);
         return itemController;
+    }
+
+    public void AddSpecialPower(Vector3 position)
+    {
+        this._powerLootAnimationController.AddLoot(position);
+        this.AddSpecialPower();
     }
 
     public void AddSpecialPower()

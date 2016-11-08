@@ -7,6 +7,6 @@ public class CoinItem : ItemUsageController
 
     protected override void UseOverCharacter(Character character)
     {
-        this._itemsController.AddCoins(coins);
+        this._itemsController.AddCoins(coins, transform.position);
     }
 }
