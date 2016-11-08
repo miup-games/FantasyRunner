@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpeedItem : ItemUsageController 
 {
@@ -8,6 +9,8 @@ public class SpeedItem : ItemUsageController
 
     protected override void UseOverCharacter(Character character)
     {
-        character.SetSpeedFactor(speedFactor, time);
+        Buff buff = new Buff(time);
+        buff.AddEffect(CharacterConstants.AttributeType.Speed, speedFactor, CharacterConstants.AttributeModifierType.Multiply);
+        character.AddBuff(buff);
     }
 }

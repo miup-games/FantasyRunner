@@ -6,63 +6,99 @@ public class ObjectMove : MonoBehaviour
 	public float speed;
     public bool useFrontLimit = false;
 
-    private bool movementEnabled = true;
-    private float speedMultiplier = 1f;
-    private StageScroll stageScroll;
-    private Coroutine restoreSpeedFactorCoroutine;
+    private bool _movementEnabled = true;
+    private StageScroll _stageScroll;
+    private Buff _moveBuff;
+
+    private BuffManager _buffManager;
+
+    private BuffManager BuffManager
+    {
+        get
+        {
+            if (this._buffManager == null)
+            {
+                this.SetBuffManager(new BuffManager());
+            }
+
+            return this._buffManager;
+        }
+    }
+
+    public float Speed
+    {
+        get
+        {
+            return this.BuffManager.ModifyAttributeValue(CharacterConstants.AttributeType.Speed, this.speed);
+        }
+    }
+
+    public void SetBuffManager(BuffManager buffManager)
+    {
+        this._buffManager = buffManager;
+        if(this._moveBuff != null)
+        {
+            this._buffManager.AddBuff(this._moveBuff);
+        }
+    }
 
     public void SetSpeed(float speed)
     {
-        this.StopResetSpeedFactorCoroutine();
         this.speed = speed;
     }
 
-    public void SetSpeedFactor(float speedFactor, float time = 0)
+    public void AddBuff(Buff buff)
     {
-        this.StopResetSpeedFactorCoroutine();
-        this.speedMultiplier = speedFactor;
-        if (time > 0)
-        {
-            this.restoreSpeedFactorCoroutine = StartCoroutine(ResetSpeedFactorWithDelay(time));
-        }
+        this.BuffManager.AddBuff(buff);
+    }
+
+    public void RemoveBuff(Buff buff)
+    {
+        this.BuffManager.RemoveBuff(buff);
     }
 
     public void EnableMovement(bool movementEnabled)
     {
-        this.StopResetSpeedFactorCoroutine();
-        this.movementEnabled = movementEnabled;
+        this._movementEnabled = movementEnabled;
     }
 
-    private void Start()
+    public void StopMoving()
     {
-        this.stageScroll = FindObjectOfType<StageScroll>();
+        this.ChangeMoveBuffValue(0f);
     }
 
-    private void StopResetSpeedFactorCoroutine()
+    public void ContinueMoving()
     {
-        if (this.restoreSpeedFactorCoroutine != null)
+        this.ChangeMoveBuffValue(1f);
+    }
+
+    private void ChangeMoveBuffValue(float newValue)
+    {
+        this._moveBuff.ModifyEffectValue(CharacterConstants.AttributeType.Speed, newValue);
+        this.BuffManager.UpdateBuffs();
+    }
+
+    private void Awake()
+    {
+        this._moveBuff = new Buff();
+        this._moveBuff.AddEffect(CharacterConstants.AttributeType.Speed, 1f, CharacterConstants.AttributeModifierType.Multiply);
+        this._stageScroll = FindObjectOfType<StageScroll>();
+        if (this._buffManager != null)
         {
-            StopCoroutine(this.restoreSpeedFactorCoroutine);
+            this._buffManager.AddBuff(this._moveBuff);
         }
-        this.restoreSpeedFactorCoroutine = null;
-    }
-
-    private IEnumerator ResetSpeedFactorWithDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        this.SetSpeedFactor(1f);
     }
 
 	private void Update ()
 	{
-        if (!movementEnabled)
+        if (!_movementEnabled)
         {
             return;
         }
 
         if (Time.timeScale > 0)
         {
-            this.Move(((speed * speedMultiplier) + this.stageScroll.GroundSpeed) * Time.timeScale);
+            this.Move(((this.Speed) + this._stageScroll.GroundSpeed) * Time.timeScale);
         }
         if (transform.localPosition.x <= StageConstants.GROUND_BACK_LIMIT_X)
 		{

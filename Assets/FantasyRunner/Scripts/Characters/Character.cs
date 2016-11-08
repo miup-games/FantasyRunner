@@ -23,28 +23,26 @@ public class Character : MonoBehaviour
     public System.Action<Character> OnDie;
     public System.Action<Character> OnRemove;
 
-    private CharacterConstants.CharacterState characterState = CharacterConstants.CharacterState.None;
-    private float hp = 0;
-    private float extraAttck = 0;
+    private CharacterAnimatorController _animatorController;
+    private Rigidbody2D _rigidBody;
+    private Collider2D[] _characterColliders;
+    private ObjectMove _objectMove;
 
-	private CharacterAnimatorController animatorController;
-    private Rigidbody2D rigidBody;
-    private Collider2D[] characterColliders;
-    private ObjectMove objectMove;
+    private Dictionary<string, Action<Collider2D>> _enterActions;
+    private Dictionary<string, Action<Collider2D>> _exitActions;
 
-    private Dictionary<string, Action<Collider2D>> enterActions;
-    private Dictionary<string, Action<Collider2D>> exitActions;
+    private Coroutine _battleCoroutine;
 
-    private Coroutine removeWeaponCoroutine;
-    private Coroutine battleCoroutine;
-
-    private bool powerItemActive = false;
+    private BuffManager _buffManager = new BuffManager();
+    private bool _powerItemActive = false;
+    private CharacterConstants.CharacterState _characterState = CharacterConstants.CharacterState.None;
+    private float _hp = 0;
 
     public bool IsDead
     {
         get
         {
-            return this.hp <= 0;
+            return this._hp <= 0;
         }
     }
 
@@ -64,14 +62,17 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetSpeed(float speed)
+    public float Attack
     {
-        this.objectMove.SetSpeed(speed);
+        get
+        {
+            return this._buffManager.ModifyAttributeValue(CharacterConstants.AttributeType.Attack, this.baseAttack);
+        }
     }
 
-    public void SetSpeedFactor(float speedFactor, float time = 0)
+    public void SetSpeed(float speed)
     {
-        this.objectMove.SetSpeedFactor(speedFactor, time);
+        this._objectMove.SetSpeed(speed);
     }
 
     public void Heal(float hp)
@@ -81,7 +82,7 @@ public class Character : MonoBehaviour
 
     public void FullHeal()
     {
-        ChangeHp(this.maxHp - this.hp);
+        ChangeHp(this.maxHp - this._hp);
     }
 
     public void Hit(float hp)
@@ -91,15 +92,12 @@ public class Character : MonoBehaviour
 
     public void FullHit()
     {
-        ChangeHp(-this.hp);
+        ChangeHp(-this._hp);
     }
 
     public void AddWeapon(WeaponItem weaponItem)
     {
-        this.StopRemoveWeaponCoroutine();
-        this.extraAttck = weaponItem.Attack;
         this.weaponController.AttachWeapon(weaponItem);
-        this.removeWeaponCoroutine = StartCoroutine(RemoveWeaponAfterDelay(weaponItem.WeaponDuration));
     }
 
     public void Move(float x)
@@ -112,52 +110,50 @@ public class Character : MonoBehaviour
     public void Win()
     {
         StopRunning();
-        StartCoroutine(this.animatorController.Win());
+        StartCoroutine(this._animatorController.Win());
     }
 
     public void EnablePowerItem(bool active)
     {
-        this.powerItemActive = active;
-        this.powerItemIndicator.SetActive(this.powerItemActive);
+        this._powerItemActive = active;
+        this.powerItemIndicator.SetActive(this._powerItemActive);
     }
 
-    void StopRemoveWeaponCoroutine()
+    public void AddBuff(Buff buff)
     {
-        if (this.removeWeaponCoroutine != null)
-        {
-            StopCoroutine(this.removeWeaponCoroutine);
-        }
-
-        this.removeWeaponCoroutine = null;
+        this._buffManager.AddBuff(buff);
     }
 
-    IEnumerator RemoveWeaponAfterDelay(float duration)
+    public void RemoveBuff(Buff buff)
     {
-        yield return new WaitForSeconds(duration);
-        this.extraAttck = 0;
-        this.weaponController.DetachWeapon();
+        this._buffManager.RemoveBuff(buff);
     }
 
 	void Awake ()
 	{
-        this.hp = this.maxHp;
+        this._hp = this.maxHp;
 
-        this.animatorController = GetComponent<CharacterAnimatorController>();
-        this.rigidBody = GetComponent<Rigidbody2D>();
-        this.objectMove = GetComponent<ObjectMove>();
-        this.characterColliders = GetComponents<Collider2D>();
+        if (this.weaponController != null)
+        {
+            this.weaponController.Initialize(this._buffManager);
+        }
 
-        this.enterActions = new Dictionary<string, Action<Collider2D>>()
+        this._animatorController = GetComponent<CharacterAnimatorController>();
+        this._rigidBody = GetComponent<Rigidbody2D>();
+        this._objectMove = GetComponent<ObjectMove>();
+        this._characterColliders = GetComponents<Collider2D>();
+
+        this._objectMove.SetBuffManager(this._buffManager);
+
+        this._enterActions = new Dictionary<string, Action<Collider2D>>()
         {
             { "Character", this.StartBattle },
-            { "Ground", this.Run },
-            { "Obstacle", this.HitObstacle }
+            { "Ground", this.Run }
         };
 
-        this.exitActions = new Dictionary<string, Action<Collider2D>>()
+        this._exitActions = new Dictionary<string, Action<Collider2D>>()
         {
-            { "Character", this.FinishBattle },
-            { "Obstacle", this.FinishObstacle }
+            { "Character", this.FinishBattle }
         };
 	}
 	
@@ -169,7 +165,7 @@ public class Character : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D col)
 	{
         Action<Collider2D> action;
-        if(enterActions.TryGetValue(col.tag, out action))
+        if(_enterActions.TryGetValue(col.tag, out action))
         {
             action(col);
         }
@@ -178,7 +174,7 @@ public class Character : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         Action<Collider2D> action;
-        if(exitActions.TryGetValue(col.tag, out action))
+        if(_exitActions.TryGetValue(col.tag, out action))
         {
             action(col);
         }
@@ -186,28 +182,16 @@ public class Character : MonoBehaviour
 
     bool ChangeState(CharacterConstants.CharacterState newState)
     {
-        if (this.characterState == newState)
+        if (this._characterState == newState)
         {
             return false;
         }
 
-        this.characterState = newState;
+        this._characterState = newState;
         return true;
     }
 
-    void HitObstacle(Collider2D col)
-    {
-        this.StartBattle(col);
-    }
-
-
     void FinishBattle(Collider2D col)
-    {
-        this.StopBattleCoroutine();
-        this.Run(col);
-    }
-
-    void FinishObstacle(Collider2D col)
     {
         this.StopBattleCoroutine();
         this.Run(col);
@@ -226,7 +210,7 @@ public class Character : MonoBehaviour
             return;
         }
 
-        if (this.powerItemActive)
+        if (this._powerItemActive)
         {
             enemy.FullHit();
             return;
@@ -244,12 +228,12 @@ public class Character : MonoBehaviour
 
     void StopBattleCoroutine()
     {
-        if (this.battleCoroutine != null)
+        if (this._battleCoroutine != null)
         {
-            StopCoroutine(this.battleCoroutine);
+            StopCoroutine(this._battleCoroutine);
         }
 
-        this.battleCoroutine = null;
+        this._battleCoroutine = null;
     }
 
     IEnumerator BattleCoroutine(Character enemy)
@@ -259,21 +243,21 @@ public class Character : MonoBehaviour
 
         while(true)
         {
-            yield return StartCoroutine(this.animatorController.Attack());
+            yield return StartCoroutine(this._animatorController.Attack());
             if (this.IsDead)
             {
                 Run();
                 break;
             }
 
-            if (this.powerItemActive)
+            if (this._powerItemActive)
             {
                 enemy.FullHit();
                 Run();
                 break;
             }
 
-            enemy.ReceiveAttack(-this.baseAttack - this.extraAttck);
+            enemy.ReceiveAttack(-this.Attack);
 
             if(enemy.IsDead)
             {
@@ -296,11 +280,11 @@ public class Character : MonoBehaviour
             hitAudioSource.Play();
         }
 
-        this.hp = Mathf.Clamp(this.hp + delta, 0f, maxHp);
+        this._hp = Mathf.Clamp(this._hp + delta, 0f, maxHp);
 
         if(this.hpBar != null)
         {
-            this.hpBar.SetValue(this.hp / this.maxHp);
+            this.hpBar.SetValue(this._hp / this.maxHp);
         }
 
         if(this.IsDead)
@@ -312,13 +296,13 @@ public class Character : MonoBehaviour
     void Die()
     {
         StopAllCoroutines();
-        for(int i = 0; i < this.characterColliders.Length; i++)
+        for(int i = 0; i < this._characterColliders.Length; i++)
         {
-            this.characterColliders[i].enabled = false;   
+            this._characterColliders[i].enabled = false;   
         }
-        this.rigidBody.Sleep();
-        this.objectMove.SetSpeedFactor(0);
-        this.animatorController.Die();
+        this._rigidBody.Sleep();
+        this._objectMove.StopMoving();
+        this._animatorController.Die();
 
         if (this.characterType == CharacterConstants.CharacterType.Enemy)
         {
@@ -355,34 +339,14 @@ public class Character : MonoBehaviour
             return;
         }
 
-        this.objectMove.SetSpeedFactor(1f);
-        this.animatorController.Run();
-    }
-
-    void Jump()
-    {
-        if (this.IsDead)
-        {
-            return;
-        }
-
-        if (!this.ChangeState(CharacterConstants.CharacterState.Jumping))
-        {
-            return;
-        }
-
-        this.animatorController.Jump();
-
-        Vector3 temp = this.rigidBody.velocity;
-        temp.y = 0;
-        this.rigidBody.velocity = temp;
-        this.rigidBody.AddForce(Vector2.up * maxJump * 50);
+        this._objectMove.ContinueMoving();
+        this._animatorController.Run();
     }
 
     void StopRunning()
     {
-        this.objectMove.SetSpeedFactor(0);
-        this.animatorController.Idle();
+        this._objectMove.StopMoving();
+        this._animatorController.Idle();
     }
 
     void OnDestroy()

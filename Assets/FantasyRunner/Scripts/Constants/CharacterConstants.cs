@@ -21,6 +21,18 @@ public static class CharacterConstants
         Jumping
     }
 
+    public enum AttributeType 
+    {
+        Speed,
+        Attack
+    };
+
+    public enum AttributeModifierType 
+    {
+        Additive,
+        Multiply
+    };
+
     public const float DESTROY_DELAY_AFTER_DEAD = 3f;
     public const float DISAPEAR_DURATION = 1f;
 }

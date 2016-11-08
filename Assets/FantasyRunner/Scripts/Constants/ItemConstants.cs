@@ -15,7 +15,7 @@ public static class ItemConstants
 
     public const float DISAPEAR_DURATION = 0.6f;
 
-    public const float POWER_ITEM_DELAY = 5f;
+    public const float POWER_ITEM_DELAY = 7f;
     public const float POWER_ITEM_PBB = 1f;
 
     public const float POWER_DURATION = 8f;

@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class ItemUsageController : MonoBehaviour 
 {
@@ -11,15 +12,23 @@ public abstract class ItemUsageController : MonoBehaviour
     [SerializeField] private CharacterConstants.CharacterType characterType;
     [SerializeField] private ProgressBarController _durationBar;
 
+    private const int FRAMES_TO_WAIT = 2;
+    private Dictionary<Character, int> currentCharactersFrames = new Dictionary<Character, int>();
+    private List<Character> currentCharacters = new List<Character>();
+
     private Rigidbody2D rigidBody;
     private Collider2D[] characterColliders;
     protected ItemsBaseController _itemsController;
 
-    private IEnumerator Start()
+    private void Awake()
     {
         this.rigidBody = GetComponent<Rigidbody2D>();
         this.characterColliders = GetComponents<Collider2D>();
+        this.EnableInteraction(false);
+    }
 
+    private IEnumerator Start()
+    {
         yield return StartCoroutine(StartAnimation());
 
         if (duration > 0)
@@ -72,10 +81,20 @@ public abstract class ItemUsageController : MonoBehaviour
 
         if (character != null && (this.characterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.characterType))
         {
+            if (currentCharactersFrames.ContainsKey(character))
+            {
+                return;
+            }
+
             this.UseOverCharacter(character);
             if (this._destroyAfterUse)
             {
                 Destroy(gameObject);
+            }
+            else
+            {
+                currentCharacters.Add(character);
+                currentCharactersFrames[character] = FRAMES_TO_WAIT;
             }
         }
     }
@@ -114,6 +133,20 @@ public abstract class ItemUsageController : MonoBehaviour
 
     protected abstract void UseOverCharacter(Character character);
     protected virtual void FinishOverCharacter(Character character){}
+
+    protected virtual void Update()
+    {
+        for(int i = currentCharacters.Count - 1; i >= 0; i--)
+        {
+            Character character = currentCharacters[i];
+            currentCharactersFrames[character]--;
+            if (currentCharactersFrames[character] == 0)
+            {
+                currentCharactersFrames.Remove(character);
+                currentCharacters.Remove(character);
+            }
+        }
+    }
 
     public void NormalizeSpeed(StageScroll stageScroll)
     {

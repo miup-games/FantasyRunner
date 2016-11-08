@@ -10,10 +10,12 @@ public class PowerItemUsageController : MonoBehaviour
     private Coroutine _powerCoroutine;
     private Character _playerCharacter;
     private System.Action _doneCb;
+    private Buff _currentSpeedBuff;
 
     public void Initialize(Character playerCharacter)
     {
         this._playerCharacter = playerCharacter;
+        this.CreateSpeedBuff();
     }
 
     public void StartPower(System.Action doneCb)
@@ -31,10 +33,16 @@ public class PowerItemUsageController : MonoBehaviour
         }
     }
 
+    private void CreateSpeedBuff()
+    {
+        this._currentSpeedBuff = new Buff();
+        this._currentSpeedBuff.AddEffect(CharacterConstants.AttributeType.Speed, ItemConstants.POWER_PLAYER_SPEED_FACTOR, CharacterConstants.AttributeModifierType.Multiply);
+    }
+
     private void StartEffect()
     {
         this._playerCharacter.EnablePowerItem(true);
-        this._playerCharacter.SetSpeedFactor(ItemConstants.POWER_PLAYER_SPEED_FACTOR);
+        this._playerCharacter.AddBuff(this._currentSpeedBuff);
         this._musicSource.pitch = ItemConstants.POWER_MUSIC_SPEED;
         Time.timeScale = ItemConstants.POWER_GAME_SPEED;
     }
@@ -43,7 +51,7 @@ public class PowerItemUsageController : MonoBehaviour
     {
         this._musicSource.pitch = 1f;
         this._playerCharacter.EnablePowerItem(false);
-        this._playerCharacter.SetSpeedFactor(1f);
+        this._playerCharacter.RemoveBuff(this._currentSpeedBuff);
         Time.timeScale = 1f;
 
         this._doneCb();
