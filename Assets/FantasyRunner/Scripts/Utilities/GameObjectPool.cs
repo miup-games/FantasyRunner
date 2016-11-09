@@ -5,9 +5,8 @@ using UnityEngine;
 public class GameObjectPool : Singleton<GameObjectPool>
 {
     Dictionary<GameObject, Stack<GameObject>> _prefabObjectPools = new Dictionary<GameObject, Stack<GameObject>>();
-    Dictionary<string, Stack<GameObject>> _nameObjectPools = new Dictionary<string, Stack<GameObject>>();
-    Dictionary<GameObject, GameObject> _objectsFromPrefab = new Dictionary<GameObject, GameObject>();
-    Dictionary<GameObject, string> _objectsFromName = new Dictionary<GameObject, string>();
+    Dictionary<GameObject, GameObject> prefabsFromObjects = new Dictionary<GameObject, GameObject>();
+    Dictionary<string, GameObject> _prefabsFromNames = new Dictionary<string, GameObject>();
 
     private GameObject PositionAndReturnObject(GameObject newObject, Vector3 position, Quaternion rotation, Transform parent)
     {
@@ -23,27 +22,15 @@ public class GameObjectPool : Singleton<GameObjectPool>
     private GameObject InstantiateFromPrefab(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
     {
         GameObject newObject = Instantiate(prefab, position, Quaternion.identity, parent) as GameObject;
-        this._objectsFromPrefab[newObject] = prefab;
+        this.prefabsFromObjects[newObject] = prefab;
         return newObject;
     }
 
-    private GameObject InstantiateFromName(string name, Vector3 position, Quaternion rotation, Transform parent)
-    {
-        GameObject newObject = Instantiate(Resources.Load(name), position, Quaternion.identity, parent) as GameObject;
-        this._objectsFromName[newObject] = name;
-        return newObject;
-    }
-
-    private GameObject GetObject<T>(
-        T source, 
-        Vector3 position, 
-        Transform parent, 
-        Dictionary<T, Stack<GameObject>> poolDictionary, 
-        System.Func<T, Vector3, Quaternion, Transform, GameObject> instantiateMethod) where T : class
+    public GameObject GetObject(GameObject prefab, Vector3 position, Transform parent)
     {
         Stack<GameObject> pool;
 
-        if (poolDictionary.TryGetValue(source, out pool))
+        if (this._prefabObjectPools.TryGetValue(prefab, out pool))
         {
             if (pool.Count > 0)
             {
@@ -52,15 +39,10 @@ public class GameObjectPool : Singleton<GameObjectPool>
         }
         else
         {
-            poolDictionary[source] = new Stack<GameObject>();
+            this._prefabObjectPools[prefab] = new Stack<GameObject>();
         }
 
-        return instantiateMethod(source, position, Quaternion.identity, parent);
-    }
-
-    public GameObject GetObject(GameObject prefab, Vector3 position, Transform parent)
-    {
-        return this.GetObject<GameObject>(prefab, position, parent, this._prefabObjectPools, this.InstantiateFromPrefab);
+        return this.InstantiateFromPrefab(prefab, position, Quaternion.identity, parent);
     }
 
     public T GetObject<T>(GameObject prefab, Vector3 position, Transform parent) where T : MonoBehaviour
@@ -70,7 +52,13 @@ public class GameObjectPool : Singleton<GameObjectPool>
 
     public GameObject GetObject(string prefabName, Vector3 position, Transform parent)
     {
-        return this.GetObject<string>(prefabName, position, parent, this._nameObjectPools, this.InstantiateFromName);
+        GameObject prefab;
+        if(!this._prefabsFromNames.TryGetValue(prefabName, out prefab))
+        {
+            this._prefabsFromNames[prefabName] = Resources.Load(name) as GameObject;
+        }
+
+        return this.GetObject(prefab, position, parent);
     }
 
     public T GetObject<T>(string prefabName, Vector3 position, Transform parent) where T : MonoBehaviour
@@ -81,17 +69,9 @@ public class GameObjectPool : Singleton<GameObjectPool>
     public void ReturnObject(GameObject returnedObject)
     {
         GameObject prefab;
-        if (this._objectsFromPrefab.TryGetValue(returnedObject, out prefab))
+        if (this.prefabsFromObjects.TryGetValue(returnedObject, out prefab))
         {
             this._prefabObjectPools[prefab].Push(returnedObject);
-        }
-        else
-        {
-            string name;
-            if (this._objectsFromName.TryGetValue(returnedObject, out name))
-            {
-                this._nameObjectPools[name].Push(returnedObject);
-            }
         }
 
         this.HideReturnedObject(returnedObject);
