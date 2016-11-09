@@ -75,7 +75,7 @@ public class ObjectMove : MonoBehaviour
     private void ChangeMoveBuffValue(float newValue)
     {
         this._moveBuff.ModifyEffectValue(CharacterConstants.AttributeType.Speed, newValue);
-        this.BuffManager.UpdateBuffs();
+        this.BuffManager.RefreshBuffs(this._moveBuff);
     }
 
     private void Awake()

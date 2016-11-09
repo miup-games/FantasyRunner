@@ -4,11 +4,11 @@ using System.Collections;
 public class BuffManager
 {
     private List<Buff> _buffs = new List<Buff>();
-    private Dictionary<CharacterConstants.AttributeType, float> _finalValues = new Dictionary<CharacterConstants.AttributeType, float>();
+    private Dictionary<CharacterConstants.AttributeType, float> _cachedValues = new Dictionary<CharacterConstants.AttributeType, float>();
 
     public void AddBuff(Buff buff)
     {
-        this.UpdateBuffs();
+        this.RefreshBuffs(buff);
         this._buffs.Add(buff);
 
         if (buff.Duration > 0)
@@ -19,26 +19,36 @@ public class BuffManager
 
     public void RemoveBuff(Buff buff)
     {
-        this.UpdateBuffs();
+        this.RefreshBuffs(buff);
         this._buffs.Remove(buff);
     }
 
-    public void UpdateBuffs()
+    public void RefreshBuffs(Buff buff)
     {
-        this._finalValues.Clear();
+        for (int i = 0; i < buff.BuffAttributes.Count; i++)
+        {
+            this.RefreshBuffs(buff.BuffAttributes[i]);
+        }
+        //this._finalValues.Clear();
+    }
+
+    public void RefreshBuffs(CharacterConstants.AttributeType attributeType)
+    {
+        this._cachedValues.Remove(attributeType);
+        //this._finalValues.Clear();
     }
 
     public float ModifyAttributeValue(CharacterConstants.AttributeType attributeType, float baseValue)
     {
         float finalValue;
-        if (this._finalValues.TryGetValue(attributeType, out finalValue))
+        if (this._cachedValues.TryGetValue(attributeType, out finalValue))
         {
-            return this._finalValues[attributeType];    
+            return this._cachedValues[attributeType];    
         }
         else
         {
             finalValue = this.ModifyAttributeValueInternal(attributeType, baseValue);
-            this._finalValues[attributeType] = finalValue;
+            this._cachedValues[attributeType] = finalValue;
             return finalValue;
         }
     }

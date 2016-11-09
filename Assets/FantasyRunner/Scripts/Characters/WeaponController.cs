@@ -31,7 +31,7 @@ public class WeaponController : MonoBehaviour
     private void ModifyBuff(float attack)
     {
         this._currentBuff.ModifyEffectValue(CharacterConstants.AttributeType.Attack, attack);
-        this._buffManager.UpdateBuffs();
+        this._buffManager.RefreshBuffs(this._currentBuff);
     }
 
     private void DetachWeapon(bool backToRegular)

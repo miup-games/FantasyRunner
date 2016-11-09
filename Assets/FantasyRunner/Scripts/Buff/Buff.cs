@@ -3,8 +3,17 @@
 public class Buff
 {
     private Dictionary<CharacterConstants.AttributeType, BuffAttributeModifier> _effects = new Dictionary<CharacterConstants.AttributeType, BuffAttributeModifier>();
+    private List<CharacterConstants.AttributeType> _buffAttributes = new List<CharacterConstants.AttributeType>();
 
     public float Duration { get; private set; }
+
+    public List<CharacterConstants.AttributeType> BuffAttributes
+    {
+        get
+        {
+            return this._buffAttributes;
+        }
+    }
 
     public Buff(float duration = 0)
     {
@@ -28,6 +37,7 @@ public class Buff
     public void AddEffect(CharacterConstants.AttributeType attributeType, float modifierValue, CharacterConstants.AttributeModifierType modiferType)
     {
         this._effects.Add(attributeType, new BuffAttributeModifier(modifierValue, modiferType));
+        this._buffAttributes.Add(attributeType);
     }
 
     public BuffAttributeModifier GetEffectModifier(CharacterConstants.AttributeType attributeType, CharacterConstants.AttributeModifierType modiferType)
