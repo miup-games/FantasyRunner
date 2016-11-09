@@ -18,8 +18,8 @@ public static class ItemConstants
     public const float POWER_ITEM_DELAY = 7f;
     public const float POWER_ITEM_PBB = 1f;
 
-    public const float POWER_DURATION = 8f;
-    public const float POWER_GAME_SPEED = 5f;
+    public const float POWER_DURATION = 10f;
+    public const float POWER_GAME_SPEED = 3f;
     public const float POWER_PLAYER_SPEED_FACTOR = 2f;
     public const float POWER_MUSIC_SPEED = 1.8f;
 }
