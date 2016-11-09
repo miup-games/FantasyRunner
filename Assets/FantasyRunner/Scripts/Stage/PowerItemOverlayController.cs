@@ -7,21 +7,15 @@ public class PowerItemOverlayController : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _appearDuration;
     [SerializeField] private float _stayDuration;
-    [SerializeField] private float left;
-    [SerializeField] private float right;
-    [SerializeField] private float center = 0;
+    [SerializeField] private ShakeController _shakeCOntroller;
 
     private const float TIME_SCALE = 0.0001f;
-    private Vector3 _leftPosition;
-    private Vector3 _rightPosition;
-    private Vector3 _centerPosition;
+    private float _totalDuration;
 
     private void Awake()
     {
-        Vector3 currentPosition = this.transform.localPosition;
-        this._leftPosition = new Vector3(left, currentPosition.y, currentPosition.z);
-        this._rightPosition = new Vector3(right, currentPosition.y, currentPosition.z);
-        this._centerPosition = new Vector3(center, currentPosition.y, currentPosition.z);
+        this.transform.localScale = Vector3.zero;
+        this._totalDuration = this._appearDuration * 2f + this._stayDuration;
     }
 
     public IEnumerator StartEffect()
@@ -29,10 +23,12 @@ public class PowerItemOverlayController : MonoBehaviour
         Time.timeScale = TIME_SCALE;
         this._audioSource.Play();
 
-        this.transform.localPosition = this._leftPosition;
         yield return 0;
-        yield return this.transform.DOLocalMoveX(this._centerPosition.x, this._appearDuration * TIME_SCALE).WaitForCompletion();
+
+        this._shakeCOntroller.StartShake(this._totalDuration * TIME_SCALE, true);
+
+        yield return this.transform.DOScale(1f, this._appearDuration * TIME_SCALE).SetEase(Ease.OutBack).WaitForCompletion();
         yield return new WaitForSeconds(this._stayDuration * TIME_SCALE);
-        yield return this.transform.DOLocalMoveX(this._rightPosition.x, this._appearDuration * TIME_SCALE).WaitForCompletion();
+        yield return this.transform.DOScale(0f, this._appearDuration * TIME_SCALE).SetEase(Ease.InBack).WaitForCompletion();
     }
 }

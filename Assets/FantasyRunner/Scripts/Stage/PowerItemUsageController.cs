@@ -6,6 +6,7 @@ public class PowerItemUsageController : MonoBehaviour
 {
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private PowerItemOverlayController _powerItemOverlayController;
+    [SerializeField] private ShakeController _cameraShakeController;
 
     private Coroutine _powerCoroutine;
     private Character _playerCharacter;
@@ -45,6 +46,8 @@ public class PowerItemUsageController : MonoBehaviour
         this._playerCharacter.AddBuff(this._currentSpeedBuff);
         this._musicSource.pitch = ItemConstants.POWER_MUSIC_SPEED;
         Time.timeScale = ItemConstants.POWER_GAME_SPEED;
+
+        this._cameraShakeController.StartShake(ItemConstants.POWER_DURATION * ItemConstants.POWER_GAME_SPEED, true);
     }
 
     private void StopEffect()
@@ -54,6 +57,7 @@ public class PowerItemUsageController : MonoBehaviour
         this._playerCharacter.RemoveBuff(this._currentSpeedBuff);
         Time.timeScale = 1f;
 
+        this._cameraShakeController.StopShake();
         this._doneCb();
     }
 
