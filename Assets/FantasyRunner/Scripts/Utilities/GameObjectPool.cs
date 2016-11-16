@@ -19,6 +19,11 @@ public class GameObjectPool : Singleton<GameObjectPool>
         return newObject;
     }
 
+    private GameObject GetGameObjectFromName(string name)
+    {
+        return Resources.Load(name) as GameObject;
+    }
+
     private GameObject InstantiateFromPrefab(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
     {
         GameObject newObject = Instantiate(prefab, position, Quaternion.identity, parent) as GameObject;
@@ -55,7 +60,7 @@ public class GameObjectPool : Singleton<GameObjectPool>
         GameObject prefab;
         if(!this._prefabsFromNames.TryGetValue(prefabName, out prefab))
         {
-            this._prefabsFromNames[prefabName] = Resources.Load(name) as GameObject;
+            this._prefabsFromNames[prefabName] = this.GetGameObjectFromName(name);
         }
 
         return this.GetObject(prefab, position, parent);

@@ -18,8 +18,6 @@ public class Character : MonoBehaviour
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private GameObject powerItemIndicator;
 
-    [SerializeField] private AudioSource hitAudioSource;
-
     public System.Action<Character> OnDie;
     public System.Action<Character> OnRemove;
 
@@ -277,7 +275,7 @@ public class Character : MonoBehaviour
     {
         if (delta < 0)
         {
-            hitAudioSource.Play();
+            AudioManager.instance.PlayFx("Hit");
         }
 
         this._hp = Mathf.Clamp(this._hp + delta, 0f, maxHp);

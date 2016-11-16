@@ -97,7 +97,7 @@ public static class DataConstants
     private static string orcRed = "Enemies/Enemy_OrcRed";
 
 
-    public static List<List<StageEnemy>> GetEnemies()
+    public static Stage GetStage()
     {
         float[] times = {4f, 2f, 1f, 0.5f};
         List<List<StageEnemy>> enemies = new List<List<StageEnemy>>();
@@ -118,7 +118,13 @@ public static class DataConstants
         lastEnemies.Add(new StageEnemy(orcRed, 5f));
         enemies.Add(lastEnemies);
 
-        return enemies;
+        return new Stage
+        {
+            Waves = enemies,
+            Id = 1,
+            PrefabName = "Stages/Stage3",
+            MusicName = "Stage1Song"
+        };
     }
     #endregion
 }

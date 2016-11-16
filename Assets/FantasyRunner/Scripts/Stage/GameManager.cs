@@ -5,21 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour 
 {
     public Character playerCharacter;
-    public StageScroll stage;
     public StageInfoLabelController infoLabelController;
-
-	public AudioSource audioSource;
-    public AudioClip itemSound;
-    public AudioClip winSound;
-    public AudioClip loseSound;
-    public AudioClip nextWaveSound;
-    public AudioClip addPowerSound;
 
     [SerializeField] private ScoreController _scoreController;
     [SerializeField] private CumulativeUIBaseController _specialPowerController;
     [SerializeField] private PowerItemUsageController _powerItemUsageController;
     [SerializeField] private LootAnimationController _powerLootAnimationController;
 
+    private StageScroll _stageScroll;
     private int _waveIndex = 0;
     private int _enemyIndex = 0;
     private List<List<StageEnemy>> _enemies;
@@ -62,16 +55,28 @@ public class GameManager : MonoBehaviour
     {
         Input.multiTouchEnabled = false;
         GameObjectPool.Instantiate();
+        this.CreateStage();
+    }
+
+    void CreateStage()
+    {
+        Stage stage = DataConstants.GetStage();
+
+        this._enemies = stage.Waves;
+
+        GameObject stagePrefab = Resources.Load(stage.PrefabName) as GameObject;
+        GameObject newObject = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity, this.transform) as GameObject;
+        this._stageScroll = newObject.GetComponent<StageScroll>();
+
+        AudioManager.instance.PlayMusic(stage.MusicName);
     }
 
 	void Start() 
 	{
         this._powerItemUsageController.Initialize(playerCharacter);
-        this._enemies = DataConstants.GetEnemies();
-
         StartCoroutine(GoToNextEnemy());
 
-        this.playerCharacter.SetSpeed(-stage.GroundSpeed);
+        this.playerCharacter.SetSpeed(-this._stageScroll.GroundSpeed);
         this.playerCharacter.OnDie += HandlePlayerDie;
 	}
 
@@ -79,7 +84,7 @@ public class GameManager : MonoBehaviour
 	{
         //FINISH LOSE
         this.Finish();
-        this.PlaySound(loseSound);
+        AudioManager.instance.PlayFx("Lose");
         character.OnDie -= this.HandlePlayerDie;
         StartCoroutine(this.infoLabelController.ShowLoseText());
 	}
@@ -123,7 +128,7 @@ public class GameManager : MonoBehaviour
 
         if (this._enemyIndex == 0)
         {
-            this.PlaySound(nextWaveSound);
+            AudioManager.instance.PlayFx("NextWave");
 
             if (this.InFirstWave)
             {
@@ -151,14 +156,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(infoLabelController.ShowWinText());
         this.playerCharacter.Win();
 
-        this.PlaySound(winSound);
+        AudioManager.instance.PlayFx("Win");
     }
 
     void Finish()
     {
         this._finished = true;
         this._powerItemUsageController.StopPower();
-        this.stage.StopMovement();
+        this._stageScroll.StopMovement();
     }
 
     IEnumerator CreateEnemy(StageEnemy stageEnemy)
@@ -176,12 +181,6 @@ public class GameManager : MonoBehaviour
         enemyCharacter.OnRemove += HandleEnemyRemove;
 	}
 
-    private void PlaySound(AudioClip audioClip)
-    {
-        audioSource.clip = audioClip;
-        audioSource.Play();
-    }
-
     public ItemUsageController PlaceItem(string itemName, Vector3 position)
     {
         GameObject itemObject = Instantiate (Resources.Load (itemName)) as GameObject;
@@ -190,9 +189,9 @@ public class GameManager : MonoBehaviour
         Transform itemTransform = itemController.transform;
         itemTransform.position = new Vector3(position.x, StageConstants.GROUND_POSITION_Y, 0);
 
-        itemController.NormalizeSpeed(stage);
+        itemController.StartMovement();
 
-        this.PlaySound(itemSound);
+        AudioManager.instance.PlayFx("Item");
         return itemController;
     }
 
@@ -204,7 +203,7 @@ public class GameManager : MonoBehaviour
 
     public void AddSpecialPower()
     {
-        this.PlaySound(this.addPowerSound);
+        AudioManager.instance.PlayFx("AddPower");
         if (!this.InLastWave && !this.IsLastWaveFinished && this._specialPowerController.Add())
         {
             this._powerItemUsageController.StartPower( () => 

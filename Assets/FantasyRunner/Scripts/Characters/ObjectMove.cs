@@ -82,11 +82,15 @@ public class ObjectMove : MonoBehaviour
     {
         this._moveBuff = new Buff();
         this._moveBuff.AddEffect(CharacterConstants.AttributeType.Speed, 1f, CharacterConstants.AttributeModifierType.Multiply);
-        this._stageScroll = FindObjectOfType<StageScroll>();
         if (this._buffManager != null)
         {
             this._buffManager.AddBuff(this._moveBuff);
         }
+    }
+
+    private void Start()
+    {
+        this._stageScroll = FindObjectOfType<StageScroll>();
     }
 
 	private void Update ()

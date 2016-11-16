@@ -148,7 +148,7 @@ public abstract class ItemUsageController : MonoBehaviour
         }
     }
 
-    public void NormalizeSpeed(StageScroll stageScroll)
+    public void StartMovement()
     {
         if(this._objectMove != null)
         {

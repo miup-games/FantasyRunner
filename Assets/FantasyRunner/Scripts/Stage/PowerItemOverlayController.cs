@@ -4,7 +4,6 @@ using DG.Tweening;
 
 public class PowerItemOverlayController : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _appearDuration;
     [SerializeField] private float _stayDuration;
     [SerializeField] private ShakeController _shakeCOntroller;
@@ -21,7 +20,7 @@ public class PowerItemOverlayController : MonoBehaviour
     public IEnumerator StartEffect()
     {
         Time.timeScale = TIME_SCALE;
-        this._audioSource.Play();
+        AudioManager.instance.PlayFx("Power");
 
         yield return 0;
 

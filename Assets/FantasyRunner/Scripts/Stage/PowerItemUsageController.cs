@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PowerItemUsageController : MonoBehaviour 
 {
-    [SerializeField] private AudioSource _musicSource;
     [SerializeField] private PowerItemOverlayController _powerItemOverlayController;
     [SerializeField] private ShakeController _cameraShakeController;
 
@@ -44,7 +43,7 @@ public class PowerItemUsageController : MonoBehaviour
     {
         this._playerCharacter.EnablePowerItem(true);
         this._playerCharacter.AddBuff(this._currentSpeedBuff);
-        this._musicSource.pitch = ItemConstants.POWER_MUSIC_SPEED;
+        AudioManager.instance.CurrentMusic.pitch = ItemConstants.POWER_MUSIC_SPEED;
         Time.timeScale = ItemConstants.POWER_GAME_SPEED;
 
         this._cameraShakeController.StartShake(ItemConstants.POWER_DURATION * ItemConstants.POWER_GAME_SPEED, true);
@@ -52,7 +51,7 @@ public class PowerItemUsageController : MonoBehaviour
 
     private void StopEffect()
     {
-        this._musicSource.pitch = 1f;
+        AudioManager.instance.CurrentMusic.pitch = 1f;
         this._playerCharacter.EnablePowerItem(false);
         this._playerCharacter.RemoveBuff(this._currentSpeedBuff);
         Time.timeScale = 1f;
