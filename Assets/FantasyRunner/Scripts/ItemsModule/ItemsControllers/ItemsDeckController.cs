@@ -17,7 +17,7 @@ public class ItemsDeckController : ItemsBaseController
 
     private void SetUpSlots()
     {
-        this._allItems = new List<Item>(DataConstants.ITEMS);
+        this._allItems = new List<Item>(ItemRepository.GetItems().ItemList);
 
         this._itemControllers = new Dictionary<Transform, ItemUIController>();
 
@@ -59,7 +59,7 @@ public class ItemsDeckController : ItemsBaseController
 
     private void ResetItems()
     {
-        this._items = new List<Item>(DataConstants.ITEMS);
+        this._items = new List<Item>(ItemRepository.GetItems().ItemList);
     }
 
     private void DrawNextItem()

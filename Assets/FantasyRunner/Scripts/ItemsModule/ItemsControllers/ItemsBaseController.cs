@@ -11,11 +11,13 @@ public abstract class ItemsBaseController : MonoBehaviour
     [SerializeField] protected WeaponUIController _weaponUIController;
     [SerializeField] protected GameObject _powerItemPrefab;
 
+    protected Item[] _items;
     protected int _coins = 0;
 
     protected virtual void Start()
     {
         StartCoroutine(this.AddPowerItems());
+        this._items = ItemRepository.GetItems().ItemList;
     }
 
     private IEnumerator AddPowerItems()
@@ -28,7 +30,7 @@ public abstract class ItemsBaseController : MonoBehaviour
                 {
                     Item item = null;
                     do 
-                        item = DataConstants.ITEMS[Random.Range(0, DataConstants.ITEMS.Length)];
+                        item = this._items[Random.Range(0, this._items.Length)];
                     while(item.Cost == 0);
 
                     Vector3 position = new Vector3(StageConstants.GROUND_ENEMY_POSITION_X, StageConstants.GROUND_POSITION_Y, 0);

@@ -1,0 +1,59 @@
+{
+    "ItemList":
+    [
+    	{
+            "Id" : 1,
+            "IconName" : "ItemIcons/Coin",
+            "PrefabName" : "ItemPrefabs/Coin",
+            "Delay" : 1.3,
+            "Cost" : 0,
+            "Name": "Coin",
+            "Description": "Coin Description"
+        },
+    	{
+    		"Id" : 2,
+            "IconName" : "ItemIcons/Hp",
+            "PrefabName" : "ItemPrefabs/Hp",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Potion",
+            "Description": "Red fluid that will recover part of your hp. It smells like peppermint and peanuts, but tastes like lettuce and dirt."
+        },
+        {
+            "Id" : 3,
+            "IconName" : "ItemIcons/Speed",
+            "PrefabName" : "ItemPrefabs/Speed",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Speed",
+            "Description": "Go beyond human speed"
+        },
+        {
+            "Id" : 4,
+            "IconName" : "ItemIcons/SwordWide",
+            "PrefabName" : "ItemPrefabs/SwordWide",
+            "Delay" : 3.5,
+            "Cost" : 3,
+            "Name": "Sword",
+            "Description": "Sword Description"
+        },
+        {
+            "Id" : 5,
+            "IconName" : "ItemIcons/Mace",
+            "PrefabName" : "ItemPrefabs/Mace",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Mace",
+            "Description": "Mace Description"
+        },
+        {
+            "Id" : 6,
+            "IconName" : "ItemIcons/SlimGreen",
+            "PrefabName" : "ItemPrefabs/SlimGreen",
+            "Delay" : 3.5,
+            "Cost" : 1,
+            "Name": "Pet",
+            "Description": "Pet Description"
+        }
+    ]
+}

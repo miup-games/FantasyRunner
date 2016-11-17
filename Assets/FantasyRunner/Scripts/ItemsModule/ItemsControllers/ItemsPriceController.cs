@@ -17,7 +17,7 @@ public class ItemsPriceController : ItemsBaseController
 
     private void SetUpSlots()
     {
-        this._allItems = new List<Item>(DataConstants.ITEMS);
+        this._allItems = new List<Item>(ItemRepository.GetItems().ItemList);
 
         this._itemControllers = new List<ItemUIController>();
 

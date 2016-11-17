@@ -1,0 +1,212 @@
+{
+    "StageList":
+    [
+    	{
+            "Id": 1,
+            "Title": "Stage1",
+            "PrefabName": "Stages/Stage1",
+            "MusicName": "Stage1Song",
+            "Waves":
+            [
+            	[
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 1
+	            	}
+	            ],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"Delay": 1
+	            	}
+            	]
+            ]
+        },
+    	{
+            "Id": 2,
+            "Title": "Stage2",
+            "PrefabName": "Stages/Stage2",
+            "MusicName": "Stage1Audio",
+            "Waves":
+            [
+            	[
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 2
+	            	}
+	            ],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 0.1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 0.1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 0.1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 0.1
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"Delay": 1
+	            	}
+            	]
+            ]
+        },
+        {
+            "Id": 3,
+            "Title": "Stage3",
+            "PrefabName": "Stages/Stage3",
+            "MusicName": "Stage1Audio",
+            "Waves":
+            [
+            	[ 
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"Delay": 4
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"Delay": 4
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"Delay": 2
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"Delay": 2
+	            	}
+	            ],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"Delay": 1
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"Delay": 1
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"Delay": 0.3
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"Delay": 0.3
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"Delay": 0.3
+	            	},
+	            	{
+	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"Delay": 0.3
+	            	}
+            	],
+            	[
+            		{
+	            		"EnemyAsset": "Enemies/Enemy_OrcRed",
+	            		"Delay": 3
+	            	}
+            	]
+            ]
+        }
+    ]
+}

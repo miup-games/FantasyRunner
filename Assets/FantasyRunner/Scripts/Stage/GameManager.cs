@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     void CreateStage()
     {
-        Stage stage = DataConstants.GetStage();
+        Stage stage = StageRepository.GetStages().StageList[0];
 
         this._enemies = stage.Waves;
 

@@ -1,4 +1,9 @@
 ﻿
+public class Items
+{
+    public Item[] ItemList;
+}
+
 public class Item
 {
     public int Id;
@@ -6,6 +11,8 @@ public class Item
     public string PrefabName;
     public float Delay;
     public int Cost;
+    public string Name;
+    public string Description;
 
     public Item Clone()
     {
