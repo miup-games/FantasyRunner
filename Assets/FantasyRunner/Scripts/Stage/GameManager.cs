@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private int _waveIndex = 0;
     private int _enemyIndex = 0;
     private List<List<StageEnemy>> _enemies;
+    private Stage _stage;
 
     private bool _finished = false;
 
@@ -60,15 +61,15 @@ public class GameManager : MonoBehaviour
 
     void CreateStage()
     {
-        Stage stage = StageRepository.GetStages().StageList[0];
+        this._stage = StageRepository.GetStageById(PlayerRepository.GetCurrentStage());
 
-        this._enemies = stage.Waves;
+        this._enemies = this._stage.Waves;
 
-        GameObject stagePrefab = Resources.Load(stage.PrefabName) as GameObject;
+        GameObject stagePrefab = Resources.Load(this._stage.PrefabName) as GameObject;
         GameObject newObject = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity, this.transform) as GameObject;
         this._stageScroll = newObject.GetComponent<StageScroll>();
 
-        AudioManager.instance.PlayMusic(stage.MusicName);
+        AudioManager.instance.PlayMusic(this._stage.MusicName);
     }
 
 	void Start() 
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(infoLabelController.ShowWinText());
         this.playerCharacter.Win();
 
+        PlayerRepository.SetLastUnlockedStage(this._stage.Id);
         AudioManager.instance.PlayFx("Win");
     }
 

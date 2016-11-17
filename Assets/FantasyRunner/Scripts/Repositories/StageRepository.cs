@@ -16,4 +16,18 @@ public static class StageRepository
             throw new System.Exception("Error creating Stages: " + e.Message);
         }
     }
+
+    public static Stage GetStageById(int id)
+    {
+        Stages stages = GetStages();
+        for(int i = 0; i < stages.StageList.Length; i++)
+        {
+            if (stages.StageList[i].Id == id)
+            {
+                return stages.StageList[i];
+            }
+        }
+
+        return null;
+    }
 }

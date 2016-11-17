@@ -56,7 +56,7 @@
             "Id": 2,
             "Title": "Stage2",
             "PrefabName": "Stages/Stage2",
-            "MusicName": "Stage1Audio",
+            "MusicName": "Stage1Song",
             "Waves":
             [
             	[
@@ -125,7 +125,7 @@
             "Id": 3,
             "Title": "Stage3",
             "PrefabName": "Stages/Stage3",
-            "MusicName": "Stage1Audio",
+            "MusicName": "Stage1Song",
             "Waves":
             [
             	[ 
