@@ -9,6 +9,7 @@ public class DragController : MonoBehaviour
 
     private Vector3 _originalPosition;
     private bool _dragging = false;
+    private bool _dragEnabled = true;
     private DropController _currentDropArea = null;
 
     public Action<DragController, DropController> OnDrop; 
@@ -17,8 +18,13 @@ public class DragController : MonoBehaviour
     {
         get
         {
-            return this._dragging;
+            return this._dragging && this._dragEnabled;
         }
+    }
+
+    public void EnableDrag(bool dragEnabled)
+    {
+        this._dragEnabled = dragEnabled;  
     }
 
     public void Return()
@@ -35,7 +41,10 @@ public class DragController : MonoBehaviour
 
     void OnMouseDown()
     {
-        this._dragging = true;
+        if (this._dragEnabled)
+        {
+            this._dragging = true;
+        }
     }
 
     void OnMouseUp()

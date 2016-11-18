@@ -8,6 +8,7 @@ public class OpenLevel : ButtonController
 
 	protected override void OnClick()
 	{
+        base.OnClick();
 		Time.timeScale = 1;
 		SceneManager.LoadScene(levelName);
 	}

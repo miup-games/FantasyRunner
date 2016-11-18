@@ -2,6 +2,7 @@
     "ItemList":
     [
     	{
+            "IsInitial" : true,
             "Id" : 1,
             "IconName" : "ItemIcons/Coin",
             "PrefabName" : "ItemPrefabs/Coin",
@@ -11,7 +12,8 @@
             "Description": "Coin Description"
         },
     	{
-    		"Id" : 2,
+    		"IsInitial" : true,
+            "Id" : 2,
             "IconName" : "ItemIcons/Hp",
             "PrefabName" : "ItemPrefabs/Hp",
             "Delay" : 3.5,
@@ -20,6 +22,7 @@
             "Description": "Red fluid that will recover part of your hp. It smells like peppermint and peanuts, but tastes like lettuce and dirt."
         },
         {
+            "IsInitial" : true,
             "Id" : 3,
             "IconName" : "ItemIcons/Speed",
             "PrefabName" : "ItemPrefabs/Speed",
@@ -29,6 +32,7 @@
             "Description": "Go beyond human speed"
         },
         {
+            "IsInitial" : true,
             "Id" : 4,
             "IconName" : "ItemIcons/SwordWide",
             "PrefabName" : "ItemPrefabs/SwordWide",
@@ -38,6 +42,7 @@
             "Description": "Sword Description"
         },
         {
+            "IsInitial" : true,
             "Id" : 5,
             "IconName" : "ItemIcons/Mace",
             "PrefabName" : "ItemPrefabs/Mace",
@@ -47,6 +52,7 @@
             "Description": "Mace Description"
         },
         {
+            "IsInitial" : true,
             "Id" : 6,
             "IconName" : "ItemIcons/SlimGreen",
             "PrefabName" : "ItemPrefabs/SlimGreen",
@@ -54,6 +60,26 @@
             "Cost" : 1,
             "Name": "Pet",
             "Description": "Pet Description"
+        },
+        {
+            "PurchaseCost" : 20,
+            "Id" : 7,
+            "IconName" : "ItemIcons/Dead",
+            "PrefabName" : "ItemPrefabs/Dead",
+            "Delay" : 3.5,
+            "Cost" : 5,
+            "Name": "Tomb",
+            "Description": "Tomb Description"
+        },
+        {
+            "PurchaseCost" : 20,
+            "Id" : 8,
+            "IconName" : "ItemIcons/Teleport",
+            "PrefabName" : "ItemPrefabs/Teleport",
+            "Delay" : 3.5,
+            "Cost" : 5,
+            "Name": "Teleport",
+            "Description": "Teleport Description"
         }
     ]
 }

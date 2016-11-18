@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public abstract class ButtonController : MonoBehaviour 
+public class ButtonController : MonoBehaviour 
 {
+    [SerializeField] private EventTrigger.TriggerEvent _customCallback;
+
     private Vector3 _regularScale;
 
     protected virtual void Awake()
@@ -20,5 +23,11 @@ public abstract class ButtonController : MonoBehaviour
         this.OnClick();
     }
 
-    protected abstract void OnClick();
+    protected virtual void OnClick()
+    {
+        if (this._customCallback != null)
+        {
+            this._customCallback.Invoke(new BaseEventData(EventSystem.current));
+        }
+    }
 }

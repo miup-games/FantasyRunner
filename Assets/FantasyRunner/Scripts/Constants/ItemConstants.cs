@@ -13,6 +13,8 @@ public static class ItemConstants
         Mace
     }
 
+    public const int COIN_ID = 1;
+
     public const float DISAPEAR_DURATION = 0.6f;
 
     public const float POWER_ITEM_DELAY = 7f;
