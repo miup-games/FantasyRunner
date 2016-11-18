@@ -9,6 +9,7 @@ public class StoreOptionController : MonoBehaviour
     [SerializeField] private TextMesh _description;
     [SerializeField] private TextMesh _cost;
     [SerializeField] private GameObject _itemOptionContainer;
+    [SerializeField] private GameObject _purchaseContainer;
 
     private List<GamerItem> _currentItems;
     private List<GamerItem> _storeItems;
@@ -25,16 +26,28 @@ public class StoreOptionController : MonoBehaviour
     {
         this._itemOptionContainer.SetActive(true);
         this._currentItem = currentItem;  
-        this._title.text = this._currentItem.Item.Item.Name;
-        this._description.text = this._currentItem.Item.Item.Description;
-        this._cost.text = "" + this._currentItem.Item.Item.PurchaseCost;
+        this._title.text = this._currentItem.GamerItem.Item.Name;
+        this._description.text = this._currentItem.GamerItem.Item.Description;
+        this._cost.text = "" + this._currentItem.GamerItem.Item.PurchaseCost;
+
+        this._purchaseContainer.SetActive(!currentItem.GamerItem.IsPurchased);
     }
 
     public void PurchaseCurrentItem()
     {
-        if(!this._currentItem.Item.IsPurchased)
+        if(!this._currentItem.GamerItem.IsPurchased)
         {
-            this._currentItem.Purchase();
+            int currentCoins = PlayerRepository.GetCoins();
+            int cost = this._currentItem.GamerItem.Item.PurchaseCost;
+
+            if (currentCoins >= cost)
+            {
+                this._purchaseContainer.SetActive(false);
+                PlayerRepository.AddCoins(-cost);
+                this._currentItem.Purchase();
+
+                AudioManager.instance.PlayFx("AddPower");
+            }
         }
     }
 }

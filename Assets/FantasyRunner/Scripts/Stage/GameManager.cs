@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CumulativeUIBaseController _specialPowerController;
     [SerializeField] private PowerItemUsageController _powerItemUsageController;
     [SerializeField] private LootAnimationController _powerLootAnimationController;
+    [SerializeField] private Pause _pauseController;
 
     private StageScroll _stageScroll;
     private int _waveIndex = 0;
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
     private Stage _stage;
 
     private bool _finished = false;
+
+    public System.Action<bool> OnFinishStage;
 
     private bool InFirstWave
     {
@@ -84,8 +87,9 @@ public class GameManager : MonoBehaviour
     void HandlePlayerDie(Character character)
 	{
         //FINISH LOSE
-        this.Finish();
+        this.Finish(false);
         AudioManager.instance.PlayFx("Lose");
+
         character.OnDie -= this.HandlePlayerDie;
         StartCoroutine(this.infoLabelController.ShowLoseText());
 	}
@@ -153,7 +157,7 @@ public class GameManager : MonoBehaviour
 
     void Win()
     {
-        this.Finish();
+        this.Finish(true);
         StartCoroutine(infoLabelController.ShowWinText());
         this.playerCharacter.Win();
 
@@ -161,11 +165,24 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayFx("Win");
     }
 
-    void Finish()
+    void Finish(bool win)
     {
+        if (this.OnFinishStage != null)
+        {
+            this.OnFinishStage(win);
+        }
+
         this._finished = true;
         this._powerItemUsageController.StopPower();
         this._stageScroll.StopMovement();
+
+        StartCoroutine(this.FinishCoroutine());
+    }
+
+    IEnumerator FinishCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        this._pauseController.StartPause(true);
     }
 
     IEnumerator CreateEnemy(StageEnemy stageEnemy)

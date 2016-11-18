@@ -34,10 +34,10 @@
         {
             "IsInitial" : true,
             "Id" : 4,
-            "IconName" : "ItemIcons/SwordWide",
-            "PrefabName" : "ItemPrefabs/SwordWide",
+            "IconName" : "ItemIcons/Sword",
+            "PrefabName" : "ItemPrefabs/Sword",
             "Delay" : 3.5,
-            "Cost" : 3,
+            "Cost" : 1,
             "Name": "Sword",
             "Description": "Sword Description"
         },
@@ -64,6 +64,16 @@
         {
             "PurchaseCost" : 20,
             "Id" : 7,
+            "IconName" : "ItemIcons/SwordWide",
+            "PrefabName" : "ItemPrefabs/SwordWide",
+            "Delay" : 3.5,
+            "Cost" : 3,
+            "Name": "Wide Sword",
+            "Description": "Wide Sword Description"
+        },
+        {
+            "PurchaseCost" : 20,
+            "Id" : 8,
             "IconName" : "ItemIcons/Dead",
             "PrefabName" : "ItemPrefabs/Dead",
             "Delay" : 3.5,
@@ -73,7 +83,7 @@
         },
         {
             "PurchaseCost" : 20,
-            "Id" : 8,
+            "Id" : 9,
             "IconName" : "ItemIcons/Teleport",
             "PrefabName" : "ItemPrefabs/Teleport",
             "Delay" : 3.5,

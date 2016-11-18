@@ -79,7 +79,7 @@ public class DragController : MonoBehaviour
         {
             DropController dropArea = col.gameObject.GetComponent<DropController>();
 
-            if (dropArea != null)
+            if (dropArea != null && dropArea.DropEnabled)
             {
                 if (this._currentDropArea != null)
                 {

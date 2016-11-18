@@ -37,4 +37,25 @@ public class StoreController : MonoBehaviour
             }
         }
     }
+
+    public void SaveItems()
+    {
+        List<GamerItem> allItems = new List<GamerItem>();
+
+        this.AddItems(allItems, this._itemStoreContainerController.ItemControllers, false);
+        this.AddItems(allItems, this._storeCurrentItemsController.ItemControllers, true);
+
+        PlayerRepository.SetGamerItems(allItems);
+    }
+
+    private void AddItems(List<GamerItem> allItems, List<ItemStoreController> itemControllers, bool isUsingItem)
+    {
+        for(int i = 0; i < itemControllers.Count; i++)
+        {
+            GamerItem gamerItem = itemControllers[i].GamerItem;
+            gamerItem.IsUsing = isUsingItem;
+            allItems.Add(gamerItem);
+        }
+
+    }
 }

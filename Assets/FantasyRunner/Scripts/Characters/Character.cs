@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class Character : MonoBehaviour 
 {
-    [SerializeField] private float maxJump = 10f;
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private float maxHp = 10f;
     [SerializeField] private float baseAttack = 5f;
@@ -41,6 +40,14 @@ public class Character : MonoBehaviour
         get
         {
             return this._hp <= 0;
+        }
+    }
+
+    private bool CanPerformAction
+    {
+        get
+        {
+            return (this._characterState != CharacterConstants.CharacterState.Dead && this._characterState != CharacterConstants.CharacterState.Win);
         }
     }
 
@@ -107,6 +114,7 @@ public class Character : MonoBehaviour
 
     public void Win()
     {
+        this.ChangeState(CharacterConstants.CharacterState.Win);
         StopRunning();
         StartCoroutine(this._animatorController.Win());
     }
@@ -145,8 +153,7 @@ public class Character : MonoBehaviour
 
         this._enterActions = new Dictionary<string, Action<Collider2D>>()
         {
-            { "Character", this.StartBattle },
-            { "Ground", this.Run }
+            { "Character", this.StartBattle }
         };
 
         this._exitActions = new Dictionary<string, Action<Collider2D>>()
@@ -197,7 +204,7 @@ public class Character : MonoBehaviour
 
     void StartBattle(Collider2D col)
     {
-        if (this.IsDead)
+        if (!this.CanPerformAction)
         {
             return;
         }
@@ -316,6 +323,8 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(DestroyAfterDelay());
         }
+
+        this.ChangeState(CharacterConstants.CharacterState.Dead);
     }
 
     IEnumerator DestroyAfterDelay()
@@ -327,7 +336,7 @@ public class Character : MonoBehaviour
 
     void Run(Collider2D col = null)
     {
-        if (this.IsDead)
+        if (!this.CanPerformAction)
         {
             return;
         }

@@ -9,15 +9,16 @@ public class ItemsDeckController : ItemsBaseController
     private List<Item> _items;
     private Dictionary<Transform, ItemUIController> _itemControllers;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         this.SetUpSlots();
         this.DrawNextItem();
     }
 
     private void SetUpSlots()
     {
-        this._allItems = new List<Item>(ItemRepository.GetItems().ItemList);
+        this._allItems = new List<Item>(this._allCurrentItems);
 
         this._itemControllers = new Dictionary<Transform, ItemUIController>();
 
@@ -59,7 +60,7 @@ public class ItemsDeckController : ItemsBaseController
 
     private void ResetItems()
     {
-        this._items = new List<Item>(ItemRepository.GetItems().ItemList);
+        this._items = new List<Item>(this._allCurrentItems);
     }
 
     private void DrawNextItem()

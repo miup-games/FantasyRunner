@@ -10,7 +10,8 @@ public static class ItemConstants
     public enum WeaponType
     {
         SwordWide,
-        Mace
+        Mace,
+        Sword
     }
 
     public const int COIN_ID = 1;

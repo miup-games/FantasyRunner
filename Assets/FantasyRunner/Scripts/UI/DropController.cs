@@ -4,11 +4,26 @@ using System.Collections;
 
 public class DropController : MonoBehaviour
 {
-    [SerializeField] GameObject highlightObject;
+    [SerializeField] private GameObject highlightObject;
+
+    private bool _dropEnabled = true;
+
+    public bool DropEnabled 
+    { 
+        get
+        {
+            return this._dropEnabled;
+        }
+    }
 
     void Awake()
     {
         this.Unselect();
+    }
+
+    public void EnableDrop(bool dropEnabled)
+    {
+        this._dropEnabled = dropEnabled;
     }
 
     public void Select()

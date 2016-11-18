@@ -6,14 +6,14 @@ using UnityEngine;
 public class ItemStoreController : MonoBehaviour 
 {
     [SerializeField] private DragController _dragController;
+    [SerializeField] private DropController _dropController;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private TextMesh _costText;
     [SerializeField] private GameObject _disabledObject;
 
-    public Action<ItemStoreController, ItemStoreController> OnSwitchItem;
     public Action<ItemStoreController> OnSelectItem;
 
-    public GamerItem Item { get; private set; }
+    public GamerItem GamerItem { get; private set; }
     public bool Purchased { get; private set;}
 
     private void Awake()
@@ -23,7 +23,7 @@ public class ItemStoreController : MonoBehaviour
         this._dragController.OnDrop += OnDrop;
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         if (this.OnSelectItem != null)
         {
@@ -33,12 +33,21 @@ public class ItemStoreController : MonoBehaviour
 
     private void OnDrop(DragController dragObject, DropController dropObject)
     {
-        ItemDropController itemDropController = dropObject.GetComponent<ItemDropController>();
+        ItemStoreController otherItem = dropObject.GetComponent<ItemStoreController>();
 
-        if (itemDropController != null)
+        if (otherItem != null)
         {
-            //itemDropController.ProccesItem(this);
+            this.SwitchItems(otherItem);
+            this._dragController.Return();
         }
+    }
+
+    private void SwitchItems(ItemStoreController otherItem)
+    {
+        AudioManager.instance.PlayFx("Item");
+        GamerItem aux = otherItem.GamerItem;
+        otherItem.SetItem(this.GamerItem);
+        this.SetItem(aux);
     }
 
     public void Return()
@@ -48,27 +57,23 @@ public class ItemStoreController : MonoBehaviour
 
     public void SetItem(GamerItem item)
     {
-        this.Item = item;
+        this.GamerItem = item;
         this._costText.text = "" + item.Item.Cost;
-        this._spriteRenderer.sprite = Resources.Load<Sprite>(Item.Item.IconName);
+        this._spriteRenderer.sprite = Resources.Load<Sprite>(GamerItem.Item.IconName);
 
-        this.UpdatePurchase();
-
-        if (item.ItemId == ItemConstants.COIN_ID)
-        {
-            this._dragController.EnableDrag(false);
-        }
+        this.UpdatePurchase(this.GamerItem.ItemId == ItemConstants.COIN_ID);
     }
 
     public void Purchase()
     {
-        this.Item.IsPurchased = true;
-        this.UpdatePurchase();
+        this.GamerItem.IsPurchased = true;
+        this.UpdatePurchase(this.GamerItem.ItemId == ItemConstants.COIN_ID);
     }
 
-    private void UpdatePurchase()
+    private void UpdatePurchase(bool isCoin)
     {
-        this._disabledObject.SetActive(!this.Item.IsPurchased);
-        this._dragController.EnableDrag(this.Item.IsPurchased);
+        this._disabledObject.SetActive(!this.GamerItem.IsPurchased);
+        this._dragController.EnableDrag(!isCoin && this.GamerItem.IsPurchased);
+        this._dropController.EnableDrop(!isCoin && this.GamerItem.IsPurchased);
     }
 }

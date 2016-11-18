@@ -18,7 +18,7 @@ public static class CharacterConstants
         Attacking,
         Running,
         Dead,
-        Jumping
+        Win
     }
 
     public enum AttributeType 

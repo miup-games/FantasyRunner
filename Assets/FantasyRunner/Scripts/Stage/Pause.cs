@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pause : MonoBehaviour
+public class Pause : ButtonController
 {
 	public GameObject pauseMenu;
 	public GameObject pauseBtn;
 
-    public float _regularTimeScale;
+    private float _regularTimeScale;
+    private bool _finalPause = false;
 
-	void OnMouseDown()
+    protected override void OnClick()
 	{
-		transform.localScale = new Vector3(0.9f,0.9f,1);
-	}
-	
-    private void OnMouseUp()
-	{
-        transform.localScale = new Vector3(1,1,1);
+        base.OnClick();
         this.StartPause();
 	}
 
-    private void StartPause()
+    public void StartPause(bool finalPause = false)
     {
+        this._finalPause = finalPause;
         this._regularTimeScale = Time.timeScale;
 
         if (Time.timeScale > 0)
@@ -34,8 +31,11 @@ public class Pause : MonoBehaviour
 
     public void UnPause()
     {
-        Time.timeScale = this._regularTimeScale;
-        pauseBtn.SetActive(true);
-        pauseMenu.SetActive(false);
+        if(!this._finalPause)
+        {
+            Time.timeScale = this._regularTimeScale;
+            pauseBtn.SetActive(true);
+            pauseMenu.SetActive(false);
+        }
     }
 }

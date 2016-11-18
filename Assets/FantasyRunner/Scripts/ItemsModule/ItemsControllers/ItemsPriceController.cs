@@ -7,25 +7,23 @@ public class ItemsPriceController : ItemsBaseController
 {
     [SerializeField] private LootAnimationController _coinsLootAnimationController;
 
-    private List<Item> _allItems;
     private List<ItemUIController> _itemControllers;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         this.SetUpSlots();
     }
 
     private void SetUpSlots()
     {
-        this._allItems = new List<Item>(ItemRepository.GetItems().ItemList);
-
         this._itemControllers = new List<ItemUIController>();
 
-        for(int i = 0; i < this._allItems.Count; i++)
+        for(int i = 0; i < this._allCurrentItems.Count; i++)
         {
             ItemUIController itemController = (Instantiate(this._itemPrefab, this._itemSlots[i].position, Quaternion.identity) as GameObject).GetComponent<ItemUIController>();
             this._itemControllers.Add(itemController);
-            itemController.SetItem(this._allItems[i], this._itemSlots[i]);
+            itemController.SetItem(this._allCurrentItems[i], this._itemSlots[i]);
         }
 
         this.AddCoins(0);

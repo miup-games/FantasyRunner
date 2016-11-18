@@ -7,6 +7,9 @@ public static class PlayerRepository
     private static string stageKey = "currentStage";
     private static string lastUnlockedStageKey = "lastUnlockedStage";
     private static string itemsKey = "items";
+    private static string coinsKey = "coins";
+
+    public static System.Action<int> OnCoinChange;
 
     public static void DeleteAll()
     {
@@ -33,14 +36,28 @@ public static class PlayerRepository
         return PlayerPrefs.GetInt(lastUnlockedStageKey);
     }
 
+    public static void AddCoins(int deltaCoins)
+    {
+        int currentCoins = GetCoins();
+        int coins = currentCoins + deltaCoins;
+        PlayerPrefs.SetInt(coinsKey, coins);
+        if (OnCoinChange != null)
+        {
+            OnCoinChange(coins);
+        }
+    }
+
+    public static int GetCoins()
+    {
+        return PlayerPrefs.GetInt(coinsKey);
+    }
+
     public static List<GamerItem> GetGamerItems()
     {
         Items items = ItemRepository.GetItems();
         List<GamerItem> gamerItems;
 
         string itemsString = PlayerPrefs.GetString(itemsKey);
-
-        UnityEngine.Debug.LogError("WAAAAAAAAA: " + itemsString);
 
         bool useInitialSetting = string.IsNullOrEmpty(itemsString);
 
@@ -69,10 +86,26 @@ public static class PlayerRepository
         return gamerItems;
     }
 
-    public static void SetGamerItems(List<GamerItem> currentItems)
+    public static List<Item> GetCurrentItems()
+    {
+        List<Item> currentItems = new List<Item>();
+        List<GamerItem> allItems = GetGamerItems();
+
+        for(int i = 0; i < allItems.Count; i++)
+        {
+            if (allItems[i].IsUsing)
+            {
+                currentItems.Add(allItems[i].Item);
+            }
+        }
+
+        return currentItems;
+    }
+
+    public static void SetGamerItems(List<GamerItem> items)
     {
         string itemsString = JsonConvert.SerializeObject(new GamerItems {
-            ItemList = currentItems
+            ItemList = items
         });
 
         PlayerPrefs.SetString(itemsKey, itemsString);
