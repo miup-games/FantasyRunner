@@ -13,7 +13,7 @@ public class BuffManager
 
         if (buff.Duration > 0)
         {
-            CoroutineManager.instance.StartCoroutine(RemoveBuffAfterDuration(buff));
+            CoroutineManager.instance.StartCoroutine(this.RemoveBuffAfterDuration(buff));
         }
     }
 

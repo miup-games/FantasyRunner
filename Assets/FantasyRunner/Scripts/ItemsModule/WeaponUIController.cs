@@ -16,11 +16,11 @@ public class WeaponUIController : MonoBehaviour
         this._regularWeaponSprite = this._icon.sprite;
     }
 
-    public void SetWeapon(WeaponItem weaponItem)
+    public void SetWeapon(AccesoryItem accesoryItem)
     {
-        this._lootAnimationController.AddLoot(weaponItem.transform.position);
+        this._lootAnimationController.AddLoot(accesoryItem.transform.position);
         StopSetProgressBarCoroutine();
-        this._setProgressBarCoroutine = StartCoroutine(SetProgressBarCoroutine(weaponItem));
+        this._setProgressBarCoroutine = StartCoroutine(SetProgressBarCoroutine(accesoryItem));
     }
 
     private void SetRegularWeapon()
@@ -38,11 +38,11 @@ public class WeaponUIController : MonoBehaviour
         }
     }
 
-    private IEnumerator SetProgressBarCoroutine(WeaponItem weaponItem)
+    private IEnumerator SetProgressBarCoroutine(AccesoryItem accesoryItem)
     {
-        this._icon.sprite = weaponItem.IconSprite;
+        this._icon.sprite = accesoryItem.IconSprite;
         this._durationBar.SetValue(1f);
-        float time = weaponItem.WeaponDuration;
+        float time = accesoryItem.AccesoryDuration;
         while (true)
         {
             if (time <= 0)
@@ -51,7 +51,7 @@ public class WeaponUIController : MonoBehaviour
             }
 
             time = Mathf.Max(0, time - Time.deltaTime);
-            this._durationBar.SetValue(time / weaponItem.WeaponDuration);
+            this._durationBar.SetValue(time / accesoryItem.AccesoryDuration);
 
             yield return 0;
         }

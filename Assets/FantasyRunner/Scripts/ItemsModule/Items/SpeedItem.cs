@@ -10,7 +10,7 @@ public class SpeedItem : ItemUsageController
     protected override void UseOverCharacter(Character character)
     {
         Buff buff = new Buff(time);
-        buff.AddEffect(CharacterConstants.AttributeType.Speed, speedFactor, CharacterConstants.AttributeModifierType.Multiply);
+        buff.AddEffect(CharacterConstants.AttributeType.Speed, speedFactor, CharacterConstants.AttributeModifierType.Additive);
         character.AddBuff(buff);
     }
 }

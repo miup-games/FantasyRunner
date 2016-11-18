@@ -44,12 +44,12 @@
         {
             "IsInitial" : true,
             "Id" : 5,
-            "IconName" : "ItemIcons/Mace",
-            "PrefabName" : "ItemPrefabs/Mace",
+            "IconName" : "ItemIcons/ArmorWhite",
+            "PrefabName" : "ItemPrefabs/ArmorWhite",
             "Delay" : 3.5,
-            "Cost" : 2,
-            "Name": "Mace",
-            "Description": "Mace Description"
+            "Cost" : 1,
+            "Name": "White Armor",
+            "Description": "White Armor Description"
         },
         {
             "IsInitial" : true,
@@ -58,12 +58,22 @@
             "PrefabName" : "ItemPrefabs/SlimGreen",
             "Delay" : 3.5,
             "Cost" : 1,
-            "Name": "Pet",
-            "Description": "Pet Description"
+            "Name": "Slim Green",
+            "Description": "Slim Green Description"
+        },
+        {
+            "PurchaseCost" : 15,
+            "Id" : 7,
+            "IconName" : "ItemIcons/Mace",
+            "PrefabName" : "ItemPrefabs/Mace",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Mace",
+            "Description": "Mace Description"
         },
         {
             "PurchaseCost" : 20,
-            "Id" : 7,
+            "Id" : 8,
             "IconName" : "ItemIcons/SwordWide",
             "PrefabName" : "ItemPrefabs/SwordWide",
             "Delay" : 3.5,
@@ -72,24 +82,44 @@
             "Description": "Wide Sword Description"
         },
         {
-            "PurchaseCost" : 20,
-            "Id" : 8,
-            "IconName" : "ItemIcons/Dead",
-            "PrefabName" : "ItemPrefabs/Dead",
+            "PurchaseCost" : 15,
+            "Id" : 9,
+            "IconName" : "ItemIcons/ArmorRed",
+            "PrefabName" : "ItemPrefabs/ArmorRed",
             "Delay" : 3.5,
-            "Cost" : 5,
-            "Name": "Tomb",
-            "Description": "Tomb Description"
+            "Cost" : 2,
+            "Name": "Red Armor",
+            "Description": "Red Armor Description"
         },
         {
             "PurchaseCost" : 20,
-            "Id" : 9,
-            "IconName" : "ItemIcons/Teleport",
-            "PrefabName" : "ItemPrefabs/Teleport",
+            "Id" : 10,
+            "IconName" : "ItemIcons/ArmorGold",
+            "PrefabName" : "ItemPrefabs/ArmorGold",
             "Delay" : 3.5,
-            "Cost" : 5,
-            "Name": "Teleport",
-            "Description": "Teleport Description"
+            "Cost" : 3,
+            "Name": "Gold Armor",
+            "Description": "Gold Armor Description"
+        },
+        {
+            "PurchaseCost" : 15,
+            "Id" : 11,
+            "IconName" : "ItemIcons/SlimBlue",
+            "PrefabName" : "ItemPrefabs/SlimBlue",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Slim Blue",
+            "Description": "Slim Blue Description"
+        },
+        {
+            "PurchaseCost" : 20,
+            "Id" : 12,
+            "IconName" : "ItemIcons/SlimRed",
+            "PrefabName" : "ItemPrefabs/SlimRed",
+            "Delay" : 3.5,
+            "Cost" : 3,
+            "Name": "Slim Red",
+            "Description": "Slim Red Description"
         }
     ]
 }

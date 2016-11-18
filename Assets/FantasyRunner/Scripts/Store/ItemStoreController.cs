@@ -16,6 +16,14 @@ public class ItemStoreController : MonoBehaviour
     public GamerItem GamerItem { get; private set; }
     public bool Purchased { get; private set;}
 
+    public Sprite Sprite
+    {
+        get
+        {
+            return this._spriteRenderer.sprite;
+        }
+    }
+
     private void Awake()
     {
         this._disabledObject.SetActive(false);

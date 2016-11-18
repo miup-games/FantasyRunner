@@ -1,14 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class WeaponItem : ItemUsageController 
+public class WeaponItem : AccesoryItem 
 {
-    [SerializeField] private float attack = 5f;
-    [SerializeField] private float weaponDuration = 5f;
     [SerializeField] private Mesh mesh;
     [SerializeField] private MeshRenderer meshRender;
     [SerializeField] private ItemConstants.WeaponType weaponType;
-    [SerializeField] private Sprite iconSprite;
 
     public Mesh WeaponMesh
     {
@@ -26,35 +23,11 @@ public class WeaponItem : ItemUsageController
         }
     }
 
-    public float Attack
-    {
-        get
-        {
-            return this.attack;
-        }
-    }
-
-    public float WeaponDuration
-    {
-        get
-        {
-            return this.weaponDuration;
-        }
-    }
-
     public ItemConstants.WeaponType WeaponType
     {
         get
         {
             return this.weaponType;
-        }
-    }
-
-    public Sprite IconSprite
-    {
-        get
-        {
-            return this.iconSprite;
         }
     }
 

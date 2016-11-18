@@ -167,14 +167,14 @@ public class GameManager : MonoBehaviour
 
     void Finish(bool win)
     {
+        this._finished = true;
+        this._powerItemUsageController.StopPower();
+        this._stageScroll.StopMovement();
+
         if (this.OnFinishStage != null)
         {
             this.OnFinishStage(win);
         }
-
-        this._finished = true;
-        this._powerItemUsageController.StopPower();
-        this._stageScroll.StopMovement();
 
         StartCoroutine(this.FinishCoroutine());
     }

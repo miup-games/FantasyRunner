@@ -24,7 +24,8 @@ public static class CharacterConstants
     public enum AttributeType 
     {
         Speed,
-        Attack
+        Attack,
+        Defense
     };
 
     public enum AttributeModifierType 

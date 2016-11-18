@@ -9,12 +9,14 @@ public class Character : MonoBehaviour
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private float maxHp = 10f;
     [SerializeField] private float baseAttack = 5f;
+    [SerializeField] private int baseDefense = 0;
     [SerializeField] private int diePoints = 10;
 
     [SerializeField] private ProgressBarController hpBar;
     [SerializeField] private CharacterConstants.CharacterType characterType = CharacterConstants.CharacterType.Enemy;
 
-    [SerializeField] private WeaponController weaponController;
+    [SerializeField] private AccesoryController weaponController;
+    [SerializeField] private AccesoryController armorController;
     [SerializeField] private GameObject powerItemIndicator;
 
     public System.Action<Character> OnDie;
@@ -75,6 +77,14 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float Defense
+    {
+        get
+        {
+            return this._buffManager.ModifyAttributeValue(CharacterConstants.AttributeType.Defense, this.baseDefense);
+        }
+    }
+
     public void SetSpeed(float speed)
     {
         this._objectMove.SetSpeed(speed);
@@ -102,7 +112,12 @@ public class Character : MonoBehaviour
 
     public void AddWeapon(WeaponItem weaponItem)
     {
-        this.weaponController.AttachWeapon(weaponItem);
+        this.weaponController.AttachAccesory(weaponItem);
+    }
+
+    public void AddArmor(ArmorItem armorItem)
+    {
+        this.armorController.AttachAccesory(armorItem);
     }
 
     public void Move(float x)
@@ -142,6 +157,11 @@ public class Character : MonoBehaviour
         if (this.weaponController != null)
         {
             this.weaponController.Initialize(this._buffManager);
+        }
+
+        if (this.armorController != null)
+        {
+            this.armorController.Initialize(this._buffManager);
         }
 
         this._animatorController = GetComponent<CharacterAnimatorController>();
@@ -275,6 +295,7 @@ public class Character : MonoBehaviour
 
     public void ReceiveAttack(float attack)
     {
+        attack = Mathf.Min(0, attack + Defense);
         this.ChangeHp(attack);
     }
 

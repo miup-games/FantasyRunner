@@ -8,6 +8,7 @@ public class StoreOptionController : MonoBehaviour
     [SerializeField] private TextMesh _title;
     [SerializeField] private TextMesh _description;
     [SerializeField] private TextMesh _cost;
+    [SerializeField] private SpriteRenderer _itemImage;
     [SerializeField] private GameObject _itemOptionContainer;
     [SerializeField] private GameObject _purchaseContainer;
 
@@ -29,7 +30,8 @@ public class StoreOptionController : MonoBehaviour
         this._title.text = this._currentItem.GamerItem.Item.Name;
         this._description.text = this._currentItem.GamerItem.Item.Description;
         this._cost.text = "" + this._currentItem.GamerItem.Item.PurchaseCost;
-
+        this._itemImage.sprite = currentItem.Sprite;
+            
         this._purchaseContainer.SetActive(!currentItem.GamerItem.IsPurchased);
     }
 

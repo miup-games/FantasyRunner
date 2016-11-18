@@ -10,15 +10,29 @@ public class PowerItemOverlayController : MonoBehaviour
 
     private const float TIME_SCALE = 0.0001f;
     private float _totalDuration;
+    private bool _ready;
 
     private void Awake()
     {
-        this.transform.localScale = Vector3.zero;
-        this._totalDuration = this._appearDuration * 2f + this._stayDuration;
+        this.Initialize();
+    }
+
+    private void Initialize()
+    {
+        if (!this._ready)
+        {
+            this.gameObject.SetActive(true);
+            this.transform.localScale = Vector3.zero;
+            this._totalDuration = this._appearDuration * 2f + this._stayDuration;
+
+            this._ready = true;
+        }
     }
 
     public IEnumerator StartEffect()
     {
+        this.Initialize();
+
         Time.timeScale = TIME_SCALE;
         AudioManager.instance.PlayFx("Power");
 

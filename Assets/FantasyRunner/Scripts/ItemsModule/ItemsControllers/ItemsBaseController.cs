@@ -9,6 +9,7 @@ public abstract class ItemsBaseController : MonoBehaviour
     [SerializeField] protected Transform[] _itemSlots;
     [SerializeField] protected TextMesh _infoText;
     [SerializeField] protected WeaponUIController _weaponUIController;
+    [SerializeField] protected WeaponUIController _armorUIController;
     [SerializeField] protected GameObject _powerItemPrefab;
 
     protected List<Item> _allCurrentItems;
@@ -78,5 +79,10 @@ public abstract class ItemsBaseController : MonoBehaviour
     public void AddWeapon(WeaponItem weaponItem)
     {
         this._weaponUIController.SetWeapon(weaponItem);
+    }
+
+    public void AddArmor(ArmorItem armorItem)
+    {
+        this._armorUIController.SetWeapon(armorItem);
     }
 }
