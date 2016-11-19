@@ -55,14 +55,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         Input.multiTouchEnabled = false;
         GameObjectPool.Instantiate();
         this.CreateStage();
     }
 
-    void CreateStage()
+    private void CreateStage()
     {
         this._stage = StageRepository.GetStageById(PlayerRepository.GetCurrentStage());
 
@@ -75,16 +75,30 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayMusic(this._stage.MusicName);
     }
 
-	void Start() 
+    private void Start() 
 	{
         this._powerItemUsageController.Initialize(playerCharacter);
         StartCoroutine(GoToNextEnemy());
 
-        this.playerCharacter.SetStage(this._stageScroll);
+        this.playerCharacter.SetSpeed(-this._stageScroll.GroundSpeed);
+        this._stageScroll.SetBuffManager(this.playerCharacter.BuffManager);
+
+        this.playerCharacter.OnAttackStart += AttackStart;
+        this.playerCharacter.OnRunStart += RunStart;
         this.playerCharacter.OnDie += HandlePlayerDie;
 	}
 
-    void HandlePlayerDie(Character character)
+    private void AttackStart()
+    {
+        this._stageScroll.SetBattle(true);
+    }
+
+    private void RunStart()
+    {
+        this._stageScroll.SetBattle(false);
+    }
+
+    private void HandlePlayerDie(Character character)
 	{
         //FINISH LOSE
         this.Finish(false);

@@ -9,32 +9,20 @@ public class ArmorController : AccesoryController
 
     private Material _regularMaterial;
 
-    protected override CharacterConstants.AttributeType AccesoryType
-    { 
-        get { return CharacterConstants.AttributeType.Defense; }
-    }
-
-    protected override CharacterConstants.AttributeModifierType AccesoryModifierType
-    { 
-        get { return CharacterConstants.AttributeModifierType.Multiply; }
-    }
-    protected override float BaseAccesoryValue
-    { 
-        get { return 1f; }
-    }
-
     private void Awake()
     {
         this._regularMaterial = this._armor.material;
     }
 
-    protected override void RemoveAccesory()
+    public override void RemoveAccesory()
     {
+        base.RemoveAccesory();
         this._armor.material = this._regularMaterial;
     }
 
-    protected override void AddAccesory(AccesoryItem accesoryItem)
+    public override void AddAccesory(AccesoryItem accesoryItem)
     {
+        base.AddAccesory(accesoryItem);
         ArmorItem armorItem = accesoryItem as ArmorItem;
         this._armor.material = armorItem.ArmorMaterial;
     }

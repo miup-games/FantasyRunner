@@ -9,28 +9,17 @@ public class WeaponController : AccesoryController
     [SerializeField] private SkinnedMeshRenderer secondWeapon;
     [SerializeField] private List<WeaponContainer> containers;
 
-    protected override CharacterConstants.AttributeType AccesoryType
-    { 
-        get { return CharacterConstants.AttributeType.Attack; }
-    }
-
-    protected override CharacterConstants.AttributeModifierType AccesoryModifierType
-    { 
-        get { return CharacterConstants.AttributeModifierType.Additive; }
-    }
-    protected override float BaseAccesoryValue
-    { 
-        get { return 0; }
-    }
-
-    protected override void RemoveAccesory()
+    public override void RemoveAccesory()
     {
+        base.RemoveAccesory();
         firstWeapon.SetActive(true);
         secondWeapon.gameObject.SetActive(false);
     }
 
-    protected override void AddAccesory(AccesoryItem accesoryItem)
+    public override void AddAccesory(AccesoryItem accesoryItem)
     {
+        base.AddAccesory(accesoryItem);
+
         WeaponItem weaponItem = accesoryItem as WeaponItem;
 
         firstWeapon.SetActive(false);

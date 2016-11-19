@@ -5,6 +5,8 @@ public class Buff
     private Dictionary<CharacterConstants.AttributeType, BuffAttributeModifier> _effects = new Dictionary<CharacterConstants.AttributeType, BuffAttributeModifier>();
     private List<CharacterConstants.AttributeType> _buffAttributes = new List<CharacterConstants.AttributeType>();
 
+    public System.Action OnRemove;
+
     public float Duration { get; private set; }
 
     public List<CharacterConstants.AttributeType> BuffAttributes

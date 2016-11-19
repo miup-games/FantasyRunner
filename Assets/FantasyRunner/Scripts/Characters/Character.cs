@@ -19,6 +19,8 @@ public class Character : MonoBehaviour
     [SerializeField] private AccesoryController armorController;
     [SerializeField] private GameObject powerItemIndicator;
 
+    public System.Action OnAttackStart;
+    public System.Action OnRunStart;
     public System.Action<Character> OnDie;
     public System.Action<Character> OnRemove;
 
@@ -36,7 +38,6 @@ public class Character : MonoBehaviour
     private bool _powerItemActive = false;
     private CharacterConstants.CharacterState _characterState = CharacterConstants.CharacterState.None;
     private float _hp = 0;
-    private Buff _stageSpeedBuff = new Buff();
     public bool IsDead
     {
         get
@@ -85,6 +86,14 @@ public class Character : MonoBehaviour
         }
     }
 
+    public BuffManager BuffManager
+    {
+        get
+        {
+            return this._buffManager;
+        }
+    }
+
     public void SetSpeed(float speed)
     {
         this._objectMove.SetSpeed(speed);
@@ -112,12 +121,22 @@ public class Character : MonoBehaviour
 
     public void AddWeapon(WeaponItem weaponItem)
     {
-        this.weaponController.AttachAccesory(weaponItem);
+        this.weaponController.AddAccesory(weaponItem);
+    }
+
+    public void RemoveWeapon()
+    {
+        this.weaponController.RemoveAccesory();
     }
 
     public void AddArmor(ArmorItem armorItem)
     {
-        this.armorController.AttachAccesory(armorItem);
+        this.armorController.AddAccesory(armorItem);
+    }
+
+    public void RemoveArmor()
+    {
+        this.armorController.RemoveAccesory();
     }
 
     public void Move(float x)
@@ -150,17 +169,16 @@ public class Character : MonoBehaviour
         this._buffManager.RemoveBuff(buff);
     }
 
-    public void SetStage(StageScroll stage)
-    {
-        this.SetSpeed(-stage.GroundSpeed);
-        stage.SetBuffManager(this._buffManager);
-    }
-
 	void Awake ()
 	{
-        this._stageSpeedBuff.AddEffect(CharacterConstants.AttributeType.GroundSpeed, 0.5f, CharacterConstants.AttributeModifierType.Multiply);
-
         this._hp = this.maxHp;
+
+        this._animatorController = GetComponent<CharacterAnimatorController>();
+        this._rigidBody = GetComponent<Rigidbody2D>();
+        this._objectMove = GetComponent<ObjectMove>();
+        this._characterColliders = GetComponents<Collider2D>();
+
+        this._objectMove.SetBuffManager(this._buffManager);
 
         if (this.weaponController != null)
         {
@@ -171,13 +189,6 @@ public class Character : MonoBehaviour
         {
             this.armorController.Initialize(this._buffManager);
         }
-
-        this._animatorController = GetComponent<CharacterAnimatorController>();
-        this._rigidBody = GetComponent<Rigidbody2D>();
-        this._objectMove = GetComponent<ObjectMove>();
-        this._characterColliders = GetComponents<Collider2D>();
-
-        this._objectMove.SetBuffManager(this._buffManager);
 
         this._enterActions = new Dictionary<string, Action<Collider2D>>()
         {
@@ -271,10 +282,11 @@ public class Character : MonoBehaviour
 
     IEnumerator BattleCoroutine(Character enemy)
     {
-        if (this.CharacterType == CharacterConstants.CharacterType.Player)
+        if (this.OnAttackStart != null)
         {
-            this.AddBuff(this._stageSpeedBuff);
+            this.OnAttackStart();
         }
+
         //yield return new WaitForSeconds(attackDelay);
         yield return 0;
 
@@ -369,11 +381,6 @@ public class Character : MonoBehaviour
 
     void Run()
     {
-        if (this.CharacterType == CharacterConstants.CharacterType.Player)
-        {
-            this.RemoveBuff(this._stageSpeedBuff);
-        }
-
         if (!this.CanPerformAction)
         {
             return;
@@ -382,6 +389,11 @@ public class Character : MonoBehaviour
         if (!this.ChangeState(CharacterConstants.CharacterState.Running))
         {
             return;
+        }
+
+        if (this.OnRunStart != null)
+        {
+            this.OnRunStart();
         }
 
         this._objectMove.ContinueMoving();

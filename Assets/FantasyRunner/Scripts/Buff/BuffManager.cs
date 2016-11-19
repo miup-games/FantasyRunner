@@ -19,8 +19,14 @@ public class BuffManager
 
     public void RemoveBuff(Buff buff)
     {
-        this.RefreshBuffs(buff);
-        this._buffs.Remove(buff);
+        if(this._buffs.Remove(buff))
+        {
+            this.RefreshBuffs(buff);
+            if(buff.OnRemove != null)
+            {
+                buff.OnRemove(); 
+            }
+        }
     }
 
     public void RefreshBuffs(Buff buff)

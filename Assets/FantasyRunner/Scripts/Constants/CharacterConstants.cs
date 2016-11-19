@@ -26,7 +26,7 @@ public static class CharacterConstants
         Speed,
         Attack,
         Defense,
-        GroundSpeed
+        BattleStageSpeed
     };
 
     public enum AttributeModifierType 
