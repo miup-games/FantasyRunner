@@ -9,6 +9,20 @@ public class StageScroll : MonoBehaviour
     [SerializeField] private BackGroundScroll _ground;
 
     bool finished = false;
+    private BuffManager _buffManager = new BuffManager();
+
+    public void SetBuffManager(BuffManager buffManager)
+    {
+        this._buffManager = buffManager;
+    }
+
+    private float Speed
+    {
+        get
+        {
+            return this._buffManager.ModifyAttributeValue(CharacterConstants.AttributeType.GroundSpeed, this._speed);
+        }
+    }
 
     public float GroundSpeed
     {
@@ -18,7 +32,7 @@ public class StageScroll : MonoBehaviour
             {
                 return 0;
             }
-            return -this._ground.Speed;
+            return -this._ground.GetSpeed(this.Speed);
         }
     }
 
@@ -31,7 +45,7 @@ public class StageScroll : MonoBehaviour
 	{
         for (int i = 0; i < this._backGrounds.Length; i++)
         {
-            this._backGrounds[i].Initialize(this._speed, this._limit);
+            this._backGrounds[i].Initialize();
         }
 	}
 	
@@ -44,7 +58,7 @@ public class StageScroll : MonoBehaviour
 
         for (int i = 0; i < this._backGrounds.Length; i++)
         {
-            this._backGrounds[i].UpdatePosition();
+            this._backGrounds[i].UpdatePosition(this.Speed, this._limit);
         }
 	}
 }

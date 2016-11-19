@@ -5,31 +5,31 @@ public class BackGroundScroll : MonoBehaviour
 {
     [SerializeField] private float _speedFactor;
 
-	private float _limit;
     private Vector3 _firstPos;
 
-    public float Speed { get; private set; }
+    public float GetSpeed(float baseSpeed)
+    {
+        return baseSpeed * this._speedFactor;   
+    }
 
-    public void Initialize(float speed, float limit)
+    public void Initialize()
 	{
 		this._firstPos = transform.localPosition;
-        this.Speed = this._speedFactor * speed;
-        this._limit = limit;
 	}
 	
-    public void UpdatePosition ()
+    public void UpdatePosition (float speed, float limit)
 	{
         if (Time.timeScale > 0)
         {
             transform.localPosition = new Vector3
                 (
-                    transform.localPosition.x - (this.Speed * Time.timeScale),
+                    transform.localPosition.x - (this.GetSpeed(speed) * Time.timeScale),
                     transform.localPosition.y,
                     0
                 );
         }
 		
-		if (transform.localPosition.x <= this._limit)
+        if (transform.localPosition.x <= limit)
 		{
 			transform.localPosition = this._firstPos;
 		}

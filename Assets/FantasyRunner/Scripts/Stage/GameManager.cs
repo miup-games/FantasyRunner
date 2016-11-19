@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         this._powerItemUsageController.Initialize(playerCharacter);
         StartCoroutine(GoToNextEnemy());
 
-        this.playerCharacter.SetSpeed(-this._stageScroll.GroundSpeed);
+        this.playerCharacter.SetStage(this._stageScroll);
         this.playerCharacter.OnDie += HandlePlayerDie;
 	}
 

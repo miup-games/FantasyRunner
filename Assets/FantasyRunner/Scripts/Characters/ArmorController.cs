@@ -14,6 +14,15 @@ public class ArmorController : AccesoryController
         get { return CharacterConstants.AttributeType.Defense; }
     }
 
+    protected override CharacterConstants.AttributeModifierType AccesoryModifierType
+    { 
+        get { return CharacterConstants.AttributeModifierType.Multiply; }
+    }
+    protected override float BaseAccesoryValue
+    { 
+        get { return 1f; }
+    }
+
     private void Awake()
     {
         this._regularMaterial = this._armor.material;

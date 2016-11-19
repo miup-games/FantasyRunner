@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private float maxHp = 10f;
     [SerializeField] private float baseAttack = 5f;
-    [SerializeField] private int baseDefense = 0;
+    [SerializeField] private float baseDefenses = 1f;
     [SerializeField] private int diePoints = 10;
 
     [SerializeField] private ProgressBarController hpBar;
@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
     private bool _powerItemActive = false;
     private CharacterConstants.CharacterState _characterState = CharacterConstants.CharacterState.None;
     private float _hp = 0;
-
+    private Buff _stageSpeedBuff = new Buff();
     public bool IsDead
     {
         get
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
     {
         get
         {
-            return this._buffManager.ModifyAttributeValue(CharacterConstants.AttributeType.Defense, this.baseDefense);
+            return this._buffManager.ModifyAttributeValue(CharacterConstants.AttributeType.Defense, this.baseDefenses);
         }
     }
 
@@ -150,8 +150,16 @@ public class Character : MonoBehaviour
         this._buffManager.RemoveBuff(buff);
     }
 
+    public void SetStage(StageScroll stage)
+    {
+        this.SetSpeed(-stage.GroundSpeed);
+        stage.SetBuffManager(this._buffManager);
+    }
+
 	void Awake ()
 	{
+        this._stageSpeedBuff.AddEffect(CharacterConstants.AttributeType.GroundSpeed, 0.5f, CharacterConstants.AttributeModifierType.Multiply);
+
         this._hp = this.maxHp;
 
         if (this.weaponController != null)
@@ -219,7 +227,7 @@ public class Character : MonoBehaviour
     void FinishBattle(Collider2D col)
     {
         this.StopBattleCoroutine();
-        this.Run(col);
+        this.Run();
     }
 
     void StartBattle(Collider2D col)
@@ -263,6 +271,10 @@ public class Character : MonoBehaviour
 
     IEnumerator BattleCoroutine(Character enemy)
     {
+        if (this.CharacterType == CharacterConstants.CharacterType.Player)
+        {
+            this.AddBuff(this._stageSpeedBuff);
+        }
         //yield return new WaitForSeconds(attackDelay);
         yield return 0;
 
@@ -295,7 +307,7 @@ public class Character : MonoBehaviour
 
     public void ReceiveAttack(float attack)
     {
-        attack = Mathf.Min(0, attack + Defense);
+        attack *= this.Defense;
         this.ChangeHp(attack);
     }
 
@@ -355,8 +367,13 @@ public class Character : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void Run(Collider2D col = null)
+    void Run()
     {
+        if (this.CharacterType == CharacterConstants.CharacterType.Player)
+        {
+            this.RemoveBuff(this._stageSpeedBuff);
+        }
+
         if (!this.CanPerformAction)
         {
             return;

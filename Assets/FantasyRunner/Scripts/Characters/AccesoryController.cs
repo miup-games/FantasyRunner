@@ -6,6 +6,8 @@ using UnityEngine;
 public abstract class AccesoryController : MonoBehaviour 
 {
     protected abstract CharacterConstants.AttributeType AccesoryType { get; }
+    protected abstract CharacterConstants.AttributeModifierType AccesoryModifierType { get; }
+    protected abstract float BaseAccesoryValue { get; }
 
     private Buff _currentBuff;
     private BuffManager _buffManager;
@@ -26,9 +28,9 @@ public abstract class AccesoryController : MonoBehaviour
         this.DetachAccesory(true);
     }
 
-    private void ModifyBuff(float attack)
+    private void ModifyBuff(float accesoryValue)
     {
-        this._currentBuff.ModifyEffectValue(this.AccesoryType, attack);
+        this._currentBuff.ModifyEffectValue(this.AccesoryType, accesoryValue);
         this._buffManager.RefreshBuffs(this._currentBuff);
     }
 
@@ -39,7 +41,7 @@ public abstract class AccesoryController : MonoBehaviour
             this.RemoveAccesory();
         }
 
-        this.ModifyBuff(0);
+        this.ModifyBuff(this.BaseAccesoryValue);
     }
 
     protected abstract void RemoveAccesory();
@@ -50,7 +52,7 @@ public abstract class AccesoryController : MonoBehaviour
         this._buffManager = buffManager;
 
         this._currentBuff = new Buff();
-        this._currentBuff.AddEffect(this.AccesoryType, 0, CharacterConstants.AttributeModifierType.Additive);
+        this._currentBuff.AddEffect(this.AccesoryType, this.BaseAccesoryValue, this.AccesoryModifierType);
         this._buffManager.AddBuff(this._currentBuff);
     }
 

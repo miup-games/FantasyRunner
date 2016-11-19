@@ -14,6 +14,15 @@ public class WeaponController : AccesoryController
         get { return CharacterConstants.AttributeType.Attack; }
     }
 
+    protected override CharacterConstants.AttributeModifierType AccesoryModifierType
+    { 
+        get { return CharacterConstants.AttributeModifierType.Additive; }
+    }
+    protected override float BaseAccesoryValue
+    { 
+        get { return 0; }
+    }
+
     protected override void RemoveAccesory()
     {
         firstWeapon.SetActive(true);

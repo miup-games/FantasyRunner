@@ -14,12 +14,12 @@
     	{
     		"IsInitial" : true,
             "Id" : 2,
-            "IconName" : "ItemIcons/Hp",
-            "PrefabName" : "ItemPrefabs/Hp",
+            "IconName" : "ItemIcons/PotionSmall",
+            "PrefabName" : "ItemPrefabs/PotionSmall",
             "Delay" : 3.5,
-            "Cost" : 2,
-            "Name": "Potion",
-            "Description": "Red fluid that will recover part of your hp. It smells like peppermint and peanuts, but tastes like lettuce and dirt."
+            "Cost" : 1,
+            "Name": "Small Potion",
+            "Description": "Fluid that will recover part of your hp."
         },
         {
             "IsInitial" : true,
@@ -120,6 +120,26 @@
             "Cost" : 3,
             "Name": "Slim Red",
             "Description": "Slim Red Description"
-        }
+        },
+        {
+    		"PurchaseCost" : 15,
+            "Id" : 13,
+            "IconName" : "ItemIcons/Potion",
+            "PrefabName" : "ItemPrefabs/Potion",
+            "Delay" : 3.5,
+            "Cost" : 2,
+            "Name": "Potion",
+            "Description": "Fluid that will recover part of your hp."
+        },
+        {
+    		"PurchaseCost" : 20,
+            "Id" : 14,
+            "IconName" : "ItemIcons/PotionBig",
+            "PrefabName" : "ItemPrefabs/PotionBig",
+            "Delay" : 3.5,
+            "Cost" : 3,
+            "Name": "Big Potion",
+            "Description": "Fluid that will recover part of your hp."
+        },
     ]
 }
