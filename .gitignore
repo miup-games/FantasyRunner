@@ -19,10 +19,6 @@ Assembly-*
 *.log
 .settings
 
-#Modules
-/Assets/Libs*
-Assets/Libs*
-
 #DOTweenSettings
 Assets/Vendors/Resources/DOTweenSettings.*
 
