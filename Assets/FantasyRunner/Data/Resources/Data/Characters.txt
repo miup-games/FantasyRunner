@@ -1,0 +1,71 @@
+{
+    "CharacterList":
+    [
+    	{
+            "Id" : 1,
+            "PrefabName" : "Characters/Player",
+            "Name" : "Player",
+            "CharacterType" : "Player",
+            "AttackDelay" : 0.3,
+            "BaseAttack" : 3,
+            "MaxHp" : 30,
+            "BaseDefenses" : 1,
+            "DiePoints" : 0
+        },
+        {
+            "Id" : 2,
+            "PrefabName" : "Characters/Enemy_Mummy",
+            "Name" : "Mummy",
+            "CharacterType" : "Enemy",
+            "AttackDelay" : 0.3,
+            "BaseAttack" : 1,
+            "MaxHp" : 10,
+            "BaseDefenses" : 1,
+            "DiePoints" : 10
+        },
+        {
+            "Id" : 3,
+            "PrefabName" : "Characters/Enemy_Zombie",
+            "Name" : "Zombie",
+            "CharacterType" : "Enemy",
+            "AttackDelay" : 0.4,
+            "BaseAttack" : 4,
+            "MaxHp" : 15,
+            "BaseDefenses" : 1,
+            "DiePoints" : 15
+        },
+        {
+            "Id" : 4,
+            "PrefabName" : "Characters/Enemy_Troll",
+            "Name" : "Troll",
+            "CharacterType" : "Enemy",
+            "AttackDelay" : 0.8,
+            "BaseAttack" : 2,
+            "MaxHp" : 35,
+            "BaseDefenses" : 1,
+            "DiePoints" : 15
+        },
+        {
+            "Id" : 5,
+            "PrefabName" : "Characters/Enemy_OrcBlue",
+            "Name" : "Blue Orc",
+            "CharacterType" : "Enemy",
+            "AttackDelay" : 0.8,
+            "BaseAttack" : 4,
+            "MaxHp" : 50,
+            "BaseDefenses" : 1,
+            "DiePoints" : 25
+        },
+        {
+            "Id" : 6,
+            "PrefabName" : "Characters/Enemy_OrcRed",
+            "Name" : "Red Orc",
+            "CharacterType" : "Enemy",
+            "AttackDelay" : 0.8,
+            "BaseAttack" : 4,
+            "MaxHp" : 70,
+            "BaseDefenses" : 1,
+            "DiePoints" : 35
+        }
+    ]
+}

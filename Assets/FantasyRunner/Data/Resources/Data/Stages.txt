@@ -10,43 +10,43 @@
             [
             	[
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 1
 	            	}
 	            ],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"EnemyName": "Troll",
 	            		"Delay": 1
 	            	}
             	]
@@ -61,61 +61,61 @@
             [
             	[
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 2
 	            	}
 	            ],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 0.1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 0.1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 0.1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 0.1
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"EnemyName": "Blue Orc",
 	            		"Delay": 1
 	            	}
             	]
@@ -130,79 +130,79 @@
             [
             	[ 
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"EnemyName": "Troll",
 	            		"Delay": 4
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"EnemyName": "Blue Orc",
 	            		"Delay": 4
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"EnemyName": "Troll",
 	            		"Delay": 2
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"EnemyName": "Blue Orc",
 	            		"Delay": 2
 	            	}
 	            ],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"EnemyName": "Troll",
 	            		"Delay": 1
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"EnemyName": "Blue Orc",
 	            		"Delay": 1
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_Mummy",
+	            		"EnemyName": "Mummy",
 	            		"Delay": 0.3
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Zombie",
+	            		"EnemyName": "Zombie",
 	            		"Delay": 0.3
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Troll",
+	            		"EnemyName": "Troll",
 	            		"Delay": 0.3
 	            	},
 	            	{
-	            		"EnemyAsset": "Enemies/Enemy_Orc",
+	            		"EnemyName": "Blue Orc",
 	            		"Delay": 0.3
 	            	}
             	],
             	[
             		{
-	            		"EnemyAsset": "Enemies/Enemy_OrcRed",
+	            		"EnemyName": "Red Orc",
 	            		"Delay": 3
 	            	}
             	]

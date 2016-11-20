@@ -35,6 +35,7 @@ public static class CharacterConstants
         Multiply
     };
 
+    public const int PLAYER_ID = 1;
     public const float DESTROY_DELAY_AFTER_DEAD = 3f;
     public const float DISAPEAR_DURATION = 1f;
 }

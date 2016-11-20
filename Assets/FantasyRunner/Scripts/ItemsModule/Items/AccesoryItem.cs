@@ -6,7 +6,7 @@ public abstract class AccesoryItem : ItemUsageController
     [SerializeField] private float accesoryDuration = 5f;
     [SerializeField] private Sprite iconSprite;
 
-    protected Character _character;
+    protected CharacterController _character;
 
     public Buff Buff { get; protected set; }
 
@@ -32,7 +32,7 @@ public abstract class AccesoryItem : ItemUsageController
         this.RemoveAccesoryFromCharacter();
     }
 
-    protected override void UseOverCharacter(Character character)
+    protected override void UseOverCharacter(CharacterController character)
     {
         this._character = character;
         this.Buff = new Buff(accesoryDuration);

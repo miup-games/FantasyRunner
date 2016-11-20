@@ -3,34 +3,34 @@ using System.Collections.Generic;
 
 public class Items
 {
-    public Item[] ItemList;
+    public Item[] ItemList { get; set; }
 }
 
 public class Item
 {
-    public int Id;
-    public string IconName;
-    public string PrefabName;
-    public float Delay;
-    public int Cost;
-    public int PurchaseCost;
-    public string Name;
-    public string Description;
-    public bool IsInitial;
+    public int Id { get; set; }
+    public string IconName { get; set; }
+    public string PrefabName { get; set; }
+    public float Delay { get; set; }
+    public int Cost { get; set; }
+    public int PurchaseCost { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public bool IsInitial { get; set; }
 }
 
 public class GamerItems
 {
-    public List<GamerItem> ItemList;
+    public List<GamerItem> ItemList { get; set; }
 }
 
 public class GamerItem
 {
     [JsonIgnore]
-    public Item Item;
-    public int ItemId;
-    public bool IsPurchased;
-    public bool IsUsing;
+    public Item Item { get; set; }
+    public int ItemId { get; set; }
+    public bool IsPurchased { get; set; }
+    public bool IsUsing { get; set; }
 
     public GamerItem(){}
 

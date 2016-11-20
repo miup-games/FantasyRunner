@@ -13,8 +13,8 @@ public abstract class ItemUsageController : MonoBehaviour
     [SerializeField] private ProgressBarController _durationBar;
 
     private const int FRAMES_TO_WAIT = 2;
-    private Dictionary<Character, int> currentCharactersFrames = new Dictionary<Character, int>();
-    private List<Character> currentCharacters = new List<Character>();
+    private Dictionary<CharacterController, int> currentCharactersFrames = new Dictionary<CharacterController, int>();
+    private List<CharacterController> currentCharacters = new List<CharacterController>();
 
     private Rigidbody2D rigidBody;
     private Collider2D[] characterColliders;
@@ -77,7 +77,7 @@ public abstract class ItemUsageController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Character character = col.gameObject.GetComponent<Character>();
+        CharacterController character = col.gameObject.GetComponent<CharacterController>();
 
         if (character != null && (this.characterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.characterType))
         {
@@ -101,7 +101,7 @@ public abstract class ItemUsageController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        Character character = col.gameObject.GetComponent<Character>();
+        CharacterController character = col.gameObject.GetComponent<CharacterController>();
 
         if (character != null && (this.characterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.characterType))
         {
@@ -131,14 +131,14 @@ public abstract class ItemUsageController : MonoBehaviour
         }
     }
 
-    protected abstract void UseOverCharacter(Character character);
-    protected virtual void FinishOverCharacter(Character character){}
+    protected abstract void UseOverCharacter(CharacterController character);
+    protected virtual void FinishOverCharacter(CharacterController character){}
 
     protected virtual void Update()
     {
         for(int i = currentCharacters.Count - 1; i >= 0; i--)
         {
-            Character character = currentCharacters[i];
+            CharacterController character = currentCharacters[i];
             currentCharactersFrames[character]--;
             if (currentCharactersFrames[character] == 0)
             {

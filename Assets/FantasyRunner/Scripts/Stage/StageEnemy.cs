@@ -2,12 +2,6 @@
 
 public class StageEnemy
 {
-    public string EnemyAsset;
-    public float Delay;
-
-    public StageEnemy(string enemyAsset, float delay)
-    {
-        this.EnemyAsset = enemyAsset;
-        this.Delay = delay;
-    }
+    public string EnemyName { get; set; }
+    public float Delay { get; set; }
 }

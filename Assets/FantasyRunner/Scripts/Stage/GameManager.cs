@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour 
 {
-    public Character playerCharacter;
-    public StageInfoLabelController infoLabelController;
+    [SerializeField] private CharacterController _playerCharacter;
+    [SerializeField] private StageInfoLabelController _infoLabelController;
 
     [SerializeField] private ScoreController _scoreController;
     [SerializeField] private CumulativeUIBaseController _specialPowerController;
@@ -77,16 +77,23 @@ public class GameManager : MonoBehaviour
 
     private void Start() 
 	{
-        this._powerItemUsageController.Initialize(playerCharacter);
-        StartCoroutine(GoToNextEnemy());
-
-        this.playerCharacter.SetSpeed(-this._stageScroll.GroundSpeed);
-        this._stageScroll.SetBuffManager(this.playerCharacter.BuffManager);
-
-        this.playerCharacter.OnAttackStart += AttackStart;
-        this.playerCharacter.OnRunStart += RunStart;
-        this.playerCharacter.OnDie += HandlePlayerDie;
+        this.SetPlayer();
+        StartCoroutine(this.GoToNextEnemy());
 	}
+
+    private void SetPlayer()
+    {
+        Character character = CharacterRepository.GetPlayer();
+        this._playerCharacter.Initialize(character);
+
+        this._powerItemUsageController.Initialize(this._playerCharacter);
+        this._playerCharacter.SetSpeed(-this._stageScroll.GroundSpeed);
+        this._stageScroll.SetBuffManager(this._playerCharacter.BuffManager);
+
+        this._playerCharacter.OnAttackStart += AttackStart;
+        this._playerCharacter.OnRunStart += RunStart;
+        this._playerCharacter.OnDie += HandlePlayerDie;
+    }
 
     private void AttackStart()
     {
@@ -98,17 +105,17 @@ public class GameManager : MonoBehaviour
         this._stageScroll.SetBattle(false);
     }
 
-    private void HandlePlayerDie(Character character)
+    private void HandlePlayerDie(CharacterController character)
 	{
         //FINISH LOSE
         this.Finish(false);
         AudioManager.instance.PlayFx("Lose");
 
         character.OnDie -= this.HandlePlayerDie;
-        StartCoroutine(this.infoLabelController.ShowLoseText());
+        StartCoroutine(this._infoLabelController.ShowLoseText());
 	}
 
-    void HandleEnemyKill(Character character)
+    void HandleEnemyKill(CharacterController character)
     {
         character.OnDie -= this.HandleEnemyKill;
         character.OnRemove -= this.HandleEnemyRemove;
@@ -117,7 +124,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GoToNextEnemy());
     }
 
-    void HandleEnemyRemove(Character character)
+    void HandleEnemyRemove(CharacterController character)
     {
         character.OnDie -= HandleEnemyKill;
         character.OnRemove -= HandleEnemyRemove;
@@ -151,16 +158,16 @@ public class GameManager : MonoBehaviour
 
             if (this.InFirstWave)
             {
-                yield return StartCoroutine(infoLabelController.ShowStartText());
+                yield return StartCoroutine(_infoLabelController.ShowStartText());
             }
             else if(this.InLastWave)
             {
                 this._powerItemUsageController.StopPower();
-                yield return StartCoroutine(this.infoLabelController.ShowLastWaveText());
+                yield return StartCoroutine(this._infoLabelController.ShowLastWaveText());
             }
             else
             {
-                yield return StartCoroutine(this.infoLabelController.ShowWaveText());
+                yield return StartCoroutine(this._infoLabelController.ShowWaveText());
             }
         }
 
@@ -172,8 +179,8 @@ public class GameManager : MonoBehaviour
     void Win()
     {
         this.Finish(true);
-        StartCoroutine(infoLabelController.ShowWinText());
-        this.playerCharacter.Win();
+        StartCoroutine(_infoLabelController.ShowWinText());
+        this._playerCharacter.Win();
 
         PlayerRepository.SetLastUnlockedStage(this._stage.Id);
         AudioManager.instance.PlayFx("Win");
@@ -206,10 +213,13 @@ public class GameManager : MonoBehaviour
 
         Vector3 position = new Vector3(StageConstants.GROUND_ENEMY_POSITION_X, StageConstants.GROUND_POSITION_Y, 0);
 
-        Character enemyCharacter =
-            (Instantiate(Resources.Load(stageEnemy.EnemyAsset), position, Quaternion.identity) as GameObject).
-            GetComponent<Character>();
-        
+        Character character = CharacterRepository.GetCharacterByName(stageEnemy.EnemyName);
+
+        CharacterController enemyCharacter =
+            (Instantiate(Resources.Load(character.PrefabName), position, Quaternion.identity) as GameObject).
+            GetComponent<CharacterController>();
+
+        enemyCharacter.Initialize(character);
         enemyCharacter.OnDie += HandleEnemyKill;
         enemyCharacter.OnRemove += HandleEnemyRemove;
 	}

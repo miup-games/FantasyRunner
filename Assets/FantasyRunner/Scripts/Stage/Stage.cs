@@ -7,9 +7,9 @@ public class Stages
 
 public class Stage
 {
-    public int Id;
-    public string Title;
-    public string PrefabName;
-    public string MusicName;
-    public List<List<StageEnemy>> Waves;
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string PrefabName { get; set; }
+    public string MusicName { get; set; }
+    public List<List<StageEnemy>> Waves { get; set; }
 }

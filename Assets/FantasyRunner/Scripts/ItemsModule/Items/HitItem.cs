@@ -6,7 +6,7 @@ public class HitItem : ItemUsageController
 {
     [SerializeField] public float attack = 0f;
 
-    protected override void UseOverCharacter(Character character)
+    protected override void UseOverCharacter(CharacterController character)
     {
         if (attack == 0)
         {

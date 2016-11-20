@@ -8,7 +8,7 @@ public class TeleportItem : ItemUsageController
     [SerializeField] public Transform point1;
     [SerializeField] public Transform point2;
 
-    protected override void UseOverCharacter(Character character)
+    protected override void UseOverCharacter(CharacterController character)
     {
         float characterPositionX = character.transform.position.x;
         float distance1 = Mathf.Abs(point1.position.x - characterPositionX);

@@ -8,11 +8,11 @@ public class PowerItemUsageController : MonoBehaviour
     [SerializeField] private ShakeController _cameraShakeController;
 
     private Coroutine _powerCoroutine;
-    private Character _playerCharacter;
+    private CharacterController _playerCharacter;
     private System.Action _doneCb;
     private Buff _currentSpeedBuff;
 
-    public void Initialize(Character playerCharacter)
+    public void Initialize(CharacterController playerCharacter)
     {
         this._playerCharacter = playerCharacter;
         this.CreateSpeedBuff();

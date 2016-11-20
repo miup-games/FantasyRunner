@@ -15,13 +15,13 @@ public class SlimItem : ItemUsageController
         animatorController.Idle();
     }
 
-    protected override void UseOverCharacter(Character character)
+    protected override void UseOverCharacter(CharacterController character)
     {
         StopCoroutine();
         attackCoroutine = StartCoroutine(AttackCoroutine(character));
     }
 
-    protected override void FinishOverCharacter(Character character)
+    protected override void FinishOverCharacter(CharacterController character)
     {
         StopCoroutine();
         animatorController.Idle();
@@ -37,7 +37,7 @@ public class SlimItem : ItemUsageController
         attackCoroutine = null;
     }
 
-    private IEnumerator AttackCoroutine(Character enemy)
+    private IEnumerator AttackCoroutine(CharacterController enemy)
     {
         yield return 0;
         while(true)
