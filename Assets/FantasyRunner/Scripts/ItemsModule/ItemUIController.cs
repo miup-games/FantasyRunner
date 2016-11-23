@@ -108,7 +108,7 @@ public class ItemUIController : MonoBehaviour
 
     public void Use(ItemsBaseController itemsController, GameManager gameManager, bool discard = true)
     {
-        ItemUsageController itemUsageController = gameManager.PlaceItem(this.Item.PrefabName, this.transform.position);
+        ItemUsageController itemUsageController = gameManager.PlaceItem(this.Item, this.transform.position);
         itemUsageController.SetController(itemsController);
 
         if (this._activatedPowerItems.Count > 0)

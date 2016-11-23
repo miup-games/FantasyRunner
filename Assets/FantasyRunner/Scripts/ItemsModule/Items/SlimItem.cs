@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class SlimItem : ItemUsageController 
 {
-    [SerializeField] public float attack = 5f;
-    [SerializeField] public float attackDelay = 1f;
     [SerializeField] public CharacterAnimatorController animatorController;
 
     private Coroutine attackCoroutine;
+    private Slim _slim;
+
+    public override void Initialize(Item item)
+    {
+        base.Initialize(item);
+        this._slim = item.GetItemUsage<Slim>();
+    }
 
     private void Awake()
     {
@@ -17,6 +22,7 @@ public class SlimItem : ItemUsageController
 
     protected override void UseOverCharacter(CharacterController character)
     {
+        base.UseOverCharacter(character);
         StopCoroutine();
         attackCoroutine = StartCoroutine(AttackCoroutine(character));
     }
@@ -44,14 +50,14 @@ public class SlimItem : ItemUsageController
         {
             yield return StartCoroutine(this.animatorController.Attack());
 
-            enemy.ReceiveAttack(-this.attack);
+            enemy.ReceiveAttack(-this._slim.Attack);
 
             if(enemy.IsDead)
             {
                 animatorController.Idle();
                 break;
             }
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(this._slim.AttackDelay);
         }
     }
 }

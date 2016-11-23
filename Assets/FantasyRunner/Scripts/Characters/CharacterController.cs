@@ -122,7 +122,7 @@ public class CharacterController : MonoBehaviour
 
     public void AddWeapon(WeaponItem weaponItem)
     {
-        this.weaponController.AddAccesory(weaponItem);
+        this.weaponController.AddAccesory(weaponItem, this);
     }
 
     public void RemoveWeapon()
@@ -132,7 +132,7 @@ public class CharacterController : MonoBehaviour
 
     public void AddArmor(ArmorItem armorItem)
     {
-        this.armorController.AddAccesory(armorItem);
+        this.armorController.AddAccesory(armorItem, this);
     }
 
     public void RemoveArmor()

@@ -10,6 +10,7 @@ public class TeleportItem : ItemUsageController
 
     protected override void UseOverCharacter(CharacterController character)
     {
+        base.UseOverCharacter(character);
         float characterPositionX = character.transform.position.x;
         float distance1 = Mathf.Abs(point1.position.x - characterPositionX);
         float distance2 = Mathf.Abs(point2.position.x - characterPositionX);

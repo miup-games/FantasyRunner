@@ -1,11 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class ArmorItem : AccesoryItem 
+public class ArmorItem : ItemUsageController 
 {
     [SerializeField] private Material _armorMaterial;
-    [SerializeField] private float _armorValue = 0.9f;
-    [SerializeField] private float _stageSpeedValue = 0.9f;
 
     public Material ArmorMaterial
     {
@@ -15,20 +13,16 @@ public class ArmorItem : AccesoryItem
         }
     }
 
-    protected override void AddAccesoryToCharacter()
+    protected override void AddBuffToCharacter(CharacterController character)
     {
-        this._character.AddArmor(this);
+        base.AddBuffToCharacter(character);
+        character.AddArmor(this);
         this._itemsController.AddArmor(this);
     }
 
-    protected override void SetBuff()
+    protected override void RemoveBuffFromCharacter(CharacterController character)
     {
-        this.Buff.AddEffect(CharacterConstants.AttributeType.Defense, this._armorValue, CharacterConstants.AttributeModifierType.Multiply);
-        this.Buff.AddEffect(CharacterConstants.AttributeType.BattleStageSpeed, this._stageSpeedValue, CharacterConstants.AttributeModifierType.Multiply);
-    }
-
-    protected override void RemoveAccesoryFromCharacter()
-    {
-        this._character.RemoveArmor();
+        base.RemoveBuffFromCharacter(character);
+        character.RemoveArmor();
     }
 }

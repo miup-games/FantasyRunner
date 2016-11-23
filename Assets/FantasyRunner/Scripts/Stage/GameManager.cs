@@ -224,15 +224,15 @@ public class GameManager : MonoBehaviour
         enemyCharacter.OnRemove += HandleEnemyRemove;
 	}
 
-    public ItemUsageController PlaceItem(string itemName, Vector3 position)
+    public ItemUsageController PlaceItem(Item item, Vector3 position)
     {
-        GameObject itemObject = Instantiate (Resources.Load (itemName)) as GameObject;
+        GameObject itemObject = Instantiate (Resources.Load (item.PrefabName)) as GameObject;
         ItemUsageController itemController = itemObject.GetComponent<ItemUsageController>();
 
         Transform itemTransform = itemController.transform;
         itemTransform.position = new Vector3(position.x, StageConstants.GROUND_POSITION_Y, 0);
 
-        itemController.StartMovement();
+        itemController.Initialize(item);
 
         AudioManager.instance.PlayFx("Item");
         return itemController;

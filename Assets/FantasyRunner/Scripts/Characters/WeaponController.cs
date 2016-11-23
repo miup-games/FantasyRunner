@@ -16,9 +16,9 @@ public class WeaponController : AccesoryController
         secondWeapon.gameObject.SetActive(false);
     }
 
-    public override void AddAccesory(AccesoryItem accesoryItem)
+    public override void AddAccesory(ItemUsageController accesoryItem, CharacterController character)
     {
-        base.AddAccesory(accesoryItem);
+        base.AddAccesory(accesoryItem, character);
 
         WeaponItem weaponItem = accesoryItem as WeaponItem;
 

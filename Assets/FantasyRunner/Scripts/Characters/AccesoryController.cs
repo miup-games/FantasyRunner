@@ -18,13 +18,13 @@ public abstract class AccesoryController : MonoBehaviour
         this._currentBuff = null;
     }
 
-    public virtual void AddAccesory(AccesoryItem accesoryItem)
+    public virtual void AddAccesory(ItemUsageController accesoryItem, CharacterController character)
     {
         if (this._currentBuff != null)
         {
             this._buffManager.RemoveBuff(this._currentBuff);
         }
 
-        this._currentBuff = accesoryItem.Buff;
+        this._currentBuff = accesoryItem.GetBuffForCharacter(character);
     }
 }

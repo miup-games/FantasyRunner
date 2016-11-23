@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class CoinItem : ItemUsageController 
 {
-    [SerializeField] public int coins = 1;
+    private Coin _coin;
+
+    public override void Initialize(Item item)
+    {
+        base.Initialize(item);
+        this._coin = item.GetItemUsage<Coin>();
+    }
 
     protected override void UseOverCharacter(CharacterController character)
     {
-        this._itemsController.AddCoins(coins, transform.position);
+        base.UseOverCharacter(character);
+        this._itemsController.AddCoins(this._coin.Coins, transform.position);
     }
 }

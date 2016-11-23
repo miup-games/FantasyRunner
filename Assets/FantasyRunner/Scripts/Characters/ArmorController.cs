@@ -20,9 +20,9 @@ public class ArmorController : AccesoryController
         this._armor.material = this._regularMaterial;
     }
 
-    public override void AddAccesory(AccesoryItem accesoryItem)
+    public override void AddAccesory(ItemUsageController accesoryItem, CharacterController character)
     {
-        base.AddAccesory(accesoryItem);
+        base.AddAccesory(accesoryItem, character);
         ArmorItem armorItem = accesoryItem as ArmorItem;
         this._armor.material = armorItem.ArmorMaterial;
     }

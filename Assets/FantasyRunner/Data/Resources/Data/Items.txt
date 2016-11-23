@@ -9,7 +9,13 @@
             "Delay" : 1.3,
             "Cost" : 0,
             "Name": "Coin",
-            "Description": "Coin Description"
+            "Description": "Coin Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+            "ItemUsage" :
+            {
+            	"Coins" : 1
+            }
         },
     	{
     		"IsInitial" : true,
@@ -19,7 +25,13 @@
             "Delay" : 3.5,
             "Cost" : 1,
             "Name": "Small Potion",
-            "Description": "Fluid that will recover part of your hp."
+            "Description": "Fluid that will recover part of your hp.",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+            "ItemUsage" :
+            {
+            	"Hp" : 10
+            }
         },
         {
             "IsInitial" : true,
@@ -29,7 +41,18 @@
             "Delay" : 3.5,
             "Cost" : 2,
             "Name": "Speed",
-            "Description": "Go beyond human speed"
+            "Description": "Go beyond human speed",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : false,
+           	"EffectDuration" : 3,
+			"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Speed",
+        			"AttributeModifierType" : "Additive",
+        			"AttributeModifierValue": 0.1
+        		}
+        	]
         },
         {
             "IsInitial" : true,
@@ -39,7 +62,23 @@
             "Delay" : 3.5,
             "Cost" : 1,
             "Name": "Sword",
-            "Description": "Sword Description"
+            "Description": "Sword Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Attack",
+        			"AttributeModifierType" : "Additive",
+        			"AttributeModifierValue": 2
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.9
+        		}
+        	]
         },
         {
             "IsInitial" : true,
@@ -49,7 +88,23 @@
             "Delay" : 3.5,
             "Cost" : 1,
             "Name": "White Armor",
-            "Description": "White Armor Description"
+            "Description": "White Armor Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Defense",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.85
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.9
+        		}
+        	]
         },
         {
             "IsInitial" : true,
@@ -59,7 +114,15 @@
             "Delay" : 3.5,
             "Cost" : 1,
             "Name": "Slim Green",
-            "Description": "Slim Green Description"
+            "Description" : "Slim Green Description",
+            "Duration" : 10,
+            "DestroyAfterUse" : false,
+            "CharacterType" : "Enemy",
+            "ItemUsage" :
+            {
+            	"Attack" : 1,
+            	"AttackDelay" : 0.5
+            }
         },
         {
             "PurchaseCost" : 15,
@@ -69,7 +132,23 @@
             "Delay" : 3.5,
             "Cost" : 2,
             "Name": "Mace",
-            "Description": "Mace Description"
+            "Description": "Mace Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Attack",
+        			"AttributeModifierType" : "Additive",
+        			"AttributeModifierValue": 4
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.9
+        		}
+        	]
         },
         {
             "PurchaseCost" : 20,
@@ -79,7 +158,23 @@
             "Delay" : 3.5,
             "Cost" : 3,
             "Name": "Wide Sword",
-            "Description": "Wide Sword Description"
+            "Description": "Wide Sword Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Attack",
+        			"AttributeModifierType" : "Additive",
+        			"AttributeModifierValue": 6
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.9
+        		}
+        	]
         },
         {
             "PurchaseCost" : 15,
@@ -89,7 +184,23 @@
             "Delay" : 3.5,
             "Cost" : 2,
             "Name": "Red Armor",
-            "Description": "Red Armor Description"
+            "Description": "Red Armor Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Defense",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.75
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.8
+        		}
+        	]
         },
         {
             "PurchaseCost" : 20,
@@ -99,7 +210,23 @@
             "Delay" : 3.5,
             "Cost" : 3,
             "Name": "Gold Armor",
-            "Description": "Gold Armor Description"
+            "Description": "Gold Armor Description",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+        	"EffectDuration" : 15,
+        	"Buff" : 
+        	[
+        		{
+        			"AttributeType" : "Defense",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.65
+        		},
+        		{
+        			"AttributeType" : "BattleStageSpeed",
+        			"AttributeModifierType" : "Multiply",
+        			"AttributeModifierValue": 0.7
+        		}
+        	]
         },
         {
             "PurchaseCost" : 15,
@@ -109,7 +236,15 @@
             "Delay" : 3.5,
             "Cost" : 2,
             "Name": "Slim Blue",
-            "Description": "Slim Blue Description"
+            "Description": "Slim Blue Description",
+            "Duration" : 10,
+            "CharacterType" : "Enemy",
+            "DestroyAfterUse" : false,
+            "ItemUsage" :
+            {
+            	"Attack" : 2,
+            	"AttackDelay" : 0.5
+            }
         },
         {
             "PurchaseCost" : 20,
@@ -119,7 +254,15 @@
             "Delay" : 3.5,
             "Cost" : 3,
             "Name": "Slim Red",
-            "Description": "Slim Red Description"
+            "Description": "Slim Red Description",
+            "Duration" : 10,
+            "CharacterType" : "Enemy",
+            "DestroyAfterUse" : false,
+            "ItemUsage" :
+            {
+            	"Attack" : 3,
+            	"AttackDelay" : 0.5
+            }
         },
         {
     		"PurchaseCost" : 15,
@@ -129,7 +272,14 @@
             "Delay" : 3.5,
             "Cost" : 2,
             "Name": "Potion",
-            "Description": "Fluid that will recover part of your hp."
+            "Description": "Fluid that will recover part of your hp.",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+           	"Duration" : 0,
+            "ItemUsage" :
+            {
+            	"Hp" : 15
+            }
         },
         {
     		"PurchaseCost" : 20,
@@ -139,7 +289,14 @@
             "Delay" : 3.5,
             "Cost" : 3,
             "Name": "Big Potion",
-            "Description": "Fluid that will recover part of your hp."
+            "Description": "Fluid that will recover part of your hp.",
+            "CharacterType" : "Player",
+            "DestroyAfterUse" : true,
+            "Duration" : 0,
+            "ItemUsage" :
+            {
+            	"Hp" : 20
+            }
         },
     ]
 }

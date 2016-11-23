@@ -24,7 +24,7 @@ public class BuffManager
             this.RefreshBuffs(buff);
             if(buff.OnRemove != null)
             {
-                buff.OnRemove(); 
+                buff.OnRemove(buff); 
             }
         }
     }

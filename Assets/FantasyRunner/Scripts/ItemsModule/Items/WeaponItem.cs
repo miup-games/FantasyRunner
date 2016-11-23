@@ -1,13 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class WeaponItem : AccesoryItem 
+public class WeaponItem : ItemUsageController 
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private MeshRenderer meshRender;
     [SerializeField] private ItemConstants.WeaponType weaponType;
-    [SerializeField] private float _weaponValue = 4f;
-    [SerializeField] private float _stageSpeedValue = 0.9f;
 
     public Mesh WeaponMesh
     {
@@ -33,20 +31,16 @@ public class WeaponItem : AccesoryItem
         }
     }
 
-    protected override void AddAccesoryToCharacter()
+    protected override void AddBuffToCharacter(CharacterController character)
     {
-        this._character.AddWeapon(this);
+        base.AddBuffToCharacter(character);
+        character.AddWeapon(this);
         this._itemsController.AddWeapon(this);
     }
 
-    protected override void SetBuff()
+    protected override void RemoveBuffFromCharacter(CharacterController character)
     {
-        this.Buff.AddEffect(CharacterConstants.AttributeType.Attack, this._weaponValue, CharacterConstants.AttributeModifierType.Additive);
-        this.Buff.AddEffect(CharacterConstants.AttributeType.BattleStageSpeed, this._stageSpeedValue, CharacterConstants.AttributeModifierType.Multiply);
-    }
-
-    protected override void RemoveAccesoryFromCharacter()
-    {
-        this._character.RemoveWeapon();
+        base.RemoveBuffFromCharacter(character);
+        character.RemoveWeapon();
     }
 }

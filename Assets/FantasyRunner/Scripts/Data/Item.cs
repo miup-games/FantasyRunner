@@ -6,6 +6,13 @@ public class Items
     public Item[] ItemList { get; set; }
 }
 
+public class ItemEffect
+{
+    public CharacterConstants.AttributeType AttributeType { get; set; }
+    public CharacterConstants.AttributeModifierType AttributeModifierType { get; set; }
+    public float AttributeModifierValue { get; set; }
+}
+
 public class Item
 {
     public int Id { get; set; }
@@ -17,6 +24,17 @@ public class Item
     public string Name { get; set; }
     public string Description { get; set; }
     public bool IsInitial { get; set; }
+    public float Duration { get; set; }
+    public float EffectDuration { get; set; }
+    public CharacterConstants.CharacterType CharacterType { get; set; }
+    public bool DestroyAfterUse { get; set; }
+    public ItemEffect[] Buff { get; set; }
+    public System.Object ItemUsage { get; set; }
+    public T GetItemUsage<T>()
+    {
+        string objectStr = JsonConvert.SerializeObject(this.ItemUsage);
+        return JsonConvert.DeserializeObject<T>(objectStr);
+    }
 }
 
 public class GamerItems

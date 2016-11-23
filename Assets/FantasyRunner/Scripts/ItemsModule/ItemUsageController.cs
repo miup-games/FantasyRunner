@@ -7,9 +7,6 @@ using System.Collections.Generic;
 public abstract class ItemUsageController : MonoBehaviour 
 {
     [SerializeField] private ObjectMove _objectMove;
-    [SerializeField] private bool _destroyAfterUse;
-    [SerializeField] public float duration = 0f;
-    [SerializeField] private CharacterConstants.CharacterType characterType;
     [SerializeField] private ProgressBarController _durationBar;
 
     private const int FRAMES_TO_WAIT = 2;
@@ -20,6 +17,43 @@ public abstract class ItemUsageController : MonoBehaviour
     private Collider2D[] characterColliders;
     protected ItemsBaseController _itemsController;
 
+    public Item Item { get; protected set; }
+    public Dictionary<Buff, CharacterController> Buffs { get; protected set; }
+
+    public Buff GetBuffForCharacter(CharacterController character)
+    {
+        foreach(KeyValuePair<Buff, CharacterController> item in Buffs)
+        {
+            if (item.Value == character)
+            {
+                return item.Key;
+            }
+        }
+
+        return null;
+    }
+
+    public virtual void Initialize(Item item)
+    {
+        this.Buffs = new Dictionary<Buff, CharacterController>();
+        this.Item = item;
+        this.StartMovement();
+        StartCoroutine(this.InitializeCoroutine());
+    }
+
+    public void SetController(ItemsBaseController itemsController)
+    {
+        this._itemsController = itemsController;
+    }
+
+    private void StartMovement()
+    {
+        if(this._objectMove != null)
+        {
+            this._objectMove.EnableMovement(true);
+        }
+    }
+
     private void Awake()
     {
         this.rigidBody = GetComponent<Rigidbody2D>();
@@ -27,11 +61,11 @@ public abstract class ItemUsageController : MonoBehaviour
         this.EnableInteraction(false);
     }
 
-    private IEnumerator Start()
+    private IEnumerator InitializeCoroutine()
     {
         yield return StartCoroutine(StartAnimation());
 
-        if (duration > 0)
+        if (this.Item.Duration > 0)
         {
             yield return StartCoroutine(WaitForDurationCoroutine());
             StartCoroutine(this.DestroyAnimation());
@@ -79,7 +113,7 @@ public abstract class ItemUsageController : MonoBehaviour
     {
         CharacterController character = col.gameObject.GetComponent<CharacterController>();
 
-        if (character != null && (this.characterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.characterType))
+        if (character != null && (this.Item.CharacterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.Item.CharacterType))
         {
             if (currentCharactersFrames.ContainsKey(character))
             {
@@ -87,7 +121,7 @@ public abstract class ItemUsageController : MonoBehaviour
             }
 
             this.UseOverCharacter(character);
-            if (this._destroyAfterUse)
+            if (this.Item.DestroyAfterUse)
             {
                 Destroy(gameObject);
             }
@@ -103,7 +137,7 @@ public abstract class ItemUsageController : MonoBehaviour
     {
         CharacterController character = col.gameObject.GetComponent<CharacterController>();
 
-        if (character != null && (this.characterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.characterType))
+        if (character != null && (this.Item.CharacterType == CharacterConstants.CharacterType.Character || character.CharacterType == this.Item.CharacterType))
         {
             this.FinishOverCharacter(character);
         }
@@ -112,7 +146,7 @@ public abstract class ItemUsageController : MonoBehaviour
     private IEnumerator WaitForDurationCoroutine()
     {
         this._durationBar.SetValue(1f);
-        float time = this.duration;
+        float time = this.Item.Duration;
         while (true)
         {
             if (time <= 0)
@@ -124,14 +158,48 @@ public abstract class ItemUsageController : MonoBehaviour
 
             if (this._durationBar != null)
             {
-                this._durationBar.SetValue(time / this.duration);
+                this._durationBar.SetValue(time / this.Item.Duration);
             }
 
             yield return 0;
         }
     }
 
-    protected abstract void UseOverCharacter(CharacterController character);
+    protected virtual void UseOverCharacter(CharacterController character)
+    {
+        this.SetBuff(character);
+        this.AddBuffToCharacter(character);
+    }
+
+    private void SetBuff(CharacterController character)
+    {
+        if (this.Item.Buff != null)
+        {
+            Buff buff = new Buff(this.Item.EffectDuration);
+            this.Buffs[buff] = character;
+
+            buff.OnRemove += this.RemoveBuff;
+
+            for (int i = 0; i < this.Item.Buff.Length; i++)
+            {
+                buff.AddEffect(this.Item.Buff[i].AttributeType, this.Item.Buff[i].AttributeModifierValue, this.Item.Buff[i].AttributeModifierType);
+            }
+
+            character.AddBuff(buff);
+        }
+    }
+
+    private void RemoveBuff(Buff buff)
+    {
+        CharacterController character = this.Buffs[buff];
+        this.Buffs.Remove(buff);
+
+        this.RemoveBuffFromCharacter(character);
+    }
+
+    protected virtual void AddBuffToCharacter(CharacterController character) {}
+    protected virtual void RemoveBuffFromCharacter(CharacterController character) {}
+
     protected virtual void FinishOverCharacter(CharacterController character){}
 
     protected virtual void Update()
@@ -146,18 +214,5 @@ public abstract class ItemUsageController : MonoBehaviour
                 currentCharacters.Remove(character);
             }
         }
-    }
-
-    public void StartMovement()
-    {
-        if(this._objectMove != null)
-        {
-            this._objectMove.EnableMovement(true);
-        }
-    }
-
-    public void SetController(ItemsBaseController itemsController)
-    {
-        this._itemsController = itemsController;
     }
 }
