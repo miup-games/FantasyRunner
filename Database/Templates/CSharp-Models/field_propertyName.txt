@@ -1,0 +1,1 @@
+			public const string PropertyName_$field_name:class_case$ = "$field_name:class_case$";

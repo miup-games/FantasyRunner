@@ -1,0 +1,16 @@
+///--------------------------------------------
+/// <summary>
+/// Automatic Generated Class - $table_name:capital_case$
+/// Please do not modify
+/// <summary>
+///--------------------------------------------
+using System;
+using GiantParticle.UI.Model;
+using MIUPGames.Database.Interfaces;
+
+namespace MIUPGames.MVC.ViewModels
+{
+	public partial class $table_name:class_case$ViewModel : BaseViewModel<I$table_name:class_case$>
+	{
+	}
+}

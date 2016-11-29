@@ -1,0 +1,33 @@
+///--------------------------------------------
+/// <summary>
+/// Automatic Generated Class - $table_name:capital_case$
+/// Please do not modify
+/// Date: $@date$
+/// <summary>
+///--------------------------------------------
+using GiantParticle.MiniJSON.Factories.Reflection;
+using MIUPGames.Database.Interfaces;
+
+namespace MIUPGames.Database.Models
+{
+	public partial class $table_name:class_case$ : I$table_name:class_case$
+	{
+
+			public const string TableName = "$table_name:sneak_case$";
+$fields:file:field_propertyName.txt$
+
+$fields:file:field_template.txt$
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="$table_name:class_case$"/> class.
+			/// </summary>
+			public $table_name:class_case$()
+			{
+$fields:file:field_assignation_[field_type].txt$
+			}
+
+			#region Getters
+$fields:file:field_getters.txt$
+			#endregion
+	}
+}

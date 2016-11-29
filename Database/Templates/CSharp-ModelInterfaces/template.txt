@@ -1,0 +1,15 @@
+///--------------------------------------------
+/// <summary>
+/// Automatic Generated Class - $table_name:capital_case$
+/// Please do not modify
+/// Date: $@date$
+/// <summary>
+///--------------------------------------------
+
+namespace MIUPGames.Database.Interfaces
+{
+	public partial interface I$table_name:class_case$ :
+$fields:file:interface_implementation_template.txt$
+	{
+	}
+}

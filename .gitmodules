@@ -1,0 +1,3 @@
+[submodule "GiantComplement"]
+	path = GiantComplement
+	url = git@bitbucket.org:giantparticle/giantcomplement.git
